@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, Form, Segment, Button } from 'semantic-ui-react';
+import { Grid, Form, Segment, Button, Loader, Dimmer } from 'semantic-ui-react';
 import { useMutation } from '@apollo/client';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import { LOGIN } from '../gql/queries';
 import { SET_TOKEN } from '../reducers/tokenReducers';
@@ -9,14 +10,16 @@ import { SET_TOKEN } from '../reducers/tokenReducers';
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [mutate, { loading, data }] = useMutation(LOGIN);
+  const [mutate, { loading, error, data }] = useMutation(LOGIN);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {
     if(data && !loading){
       dispatch(SET_TOKEN(data.login.value));
+      history.push('/');
     }
-  }, [data, loading, dispatch]);
+  }, [data, loading, dispatch, history]);
 
   const handleSubmit = () => {
     mutate({
@@ -25,8 +28,6 @@ const Login = () => {
         password
       }
     }).catch(e => console.log('error: ', e.message));
-    console.log('username: ', username);
-    console.log('password: ', password);
   };
 
   return(
@@ -50,9 +51,13 @@ const Login = () => {
               value={password}
               onChange={({ target }) => setPassword(target.value)}
             />
-            <Button fluid size='large' type='submit' disabled={!username || !password || false}>
+            <Dimmer inverted active={loading}>
+              <Loader />
+            </Dimmer>
+            <Button fluid size='large' type='submit' disabled={!username || !password || loading || false}>
               Login
             </Button>
+            {error ? <div style={{ color: 'red'}}>{error.message}</div>: <></>}
           </Segment>
         </Form>
       </Grid.Column>

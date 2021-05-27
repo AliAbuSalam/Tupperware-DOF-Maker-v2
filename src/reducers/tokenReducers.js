@@ -1,14 +1,9 @@
-const initialState = {
-  value: null
-};
+const initialState = null;
 
 const tokenReducer = (state = initialState, action) => {
   switch(action.type){
     case 'SET':
-      return {
-        ...state,
-        value: action.data
-      };
+      return action.data;
     default:
       return state;
   }
