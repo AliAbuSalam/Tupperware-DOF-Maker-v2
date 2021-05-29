@@ -1,24 +1,39 @@
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   Switch,
-  Link,
   Route,
 } from 'react-router-dom';
 
 import Login from './components/Login';
 import Home from './components/Home';
+import ItemsPage from './components/ItemsPage';
+import NavBar from './components/NavBar';
+import { SET_TOKEN } from './reducers/tokenReducers';
 
 const App = () => {
+  const dispatch = useDispatch();
+  const tokenFromLocalStorage = localStorage.getItem('token');
   const token = useSelector(state => state.token);
-  console.log('token: ', token);
+
+  useEffect(() => {
+    if(tokenFromLocalStorage !== null){
+      dispatch(SET_TOKEN(tokenFromLocalStorage));
+    }
+  }, []);
+
   if(!token){
     return(
       <Login />
     );
   }
   return(
+    <div>
+      <NavBar />
       <Switch>
+        <Route path='/items'>
+          <ItemsPage />
+        </Route>
         <Route path='/login'>
           <Login />
         </Route>
@@ -26,6 +41,7 @@ const App = () => {
           <Home />
         </Route>
       </Switch>
+    </div>
   );
 };
 

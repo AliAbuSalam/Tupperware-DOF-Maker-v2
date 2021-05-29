@@ -10,3 +10,14 @@ export const LOGIN = gql`
     }
   }
 `;
+
+export const GET_ALL_ITEMS = gql`
+  query getAllItems {
+    getAllItems {
+      name
+      id
+      stock
+      price
+    }
+  }
+`;

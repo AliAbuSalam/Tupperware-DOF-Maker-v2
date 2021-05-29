@@ -2,8 +2,13 @@ const initialState = null;
 
 const tokenReducer = (state = initialState, action) => {
   switch(action.type){
-    case 'SET':
+    case 'SET_TOKEN':
+      localStorage.setItem('token', action.data);
       return action.data;
+    case 'REMOVE_TOKEN':
+      console.log('removing token');
+      localStorage.removeItem('token');
+      return null;
     default:
       return state;
   }
@@ -11,8 +16,14 @@ const tokenReducer = (state = initialState, action) => {
 
 export const SET_TOKEN = (token) => {
   return {
-    type: 'SET',
+    type: 'SET_TOKEN',
     data: token
+  }
+};
+
+export const REMOVE_TOKEN = () => {
+  return {
+    type: 'REMOVE_TOKEN'
   }
 };
 
