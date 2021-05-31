@@ -3,15 +3,41 @@ import { useQuery } from '@apollo/client';
 import { Table, Button, Input } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import NumberFilters from './NumberFilters';
 import { GET_ALL_ITEMS } from '../gql/queries';
 import { SET_ITEMS } from '../reducers/itemReducers';
 import { SET_ACTIVE_PAGE } from '../reducers/activePageReducers';
 import parseToRp from '../lib/parseToRp';
 
+const filterNumberFunction = (value, filterObject) => {
+  switch(filterObject.operator){
+    case '>':
+      return value > filterObject.value[0];
+    case '>=':
+      return value >= filterObject.value[0];
+    case '<':
+      return value < filterObject.value[0];
+    case '<=':
+      return value <= filterObject.value[0];
+    case 'range':
+      return value >= filterObject.value[0] && value <= filterObject.value[1];
+    default:
+      return true;
+  }
+}
+
 const ItemsPage = () => {
   const { data, loading } = useQuery(GET_ALL_ITEMS);
   const itemsList = useSelector(state => state.items);
   const [nameFilter, setNameFilter] = useState('');
+  const [priceFilter, setPriceFilter] = useState({
+    operator: 'none',
+    value: null
+  });
+  const [stockFilter, setStockFilter] = useState({
+    operator: 'none',
+    value: null
+  });
   const [filteredItems, setFilteredItems] = useState(itemsList);
   const dispatch = useDispatch();
   dispatch(SET_ACTIVE_PAGE('items'));
@@ -22,22 +48,21 @@ const ItemsPage = () => {
     }
   }, [data, loading, dispatch]);
 
-  /*useEffect(() => {
-    setFilteredItems(itemsList);
-  }, [itemsList, setFilteredItems]);*/
-
   useEffect(() => {
-    if(nameFilter === ''){
-      setFilteredItems(itemsList);
-      return;
-    }
-    const newFilteredItems = itemsList.filter(item => item.name.includes(nameFilter));
+    const newFilteredItems = itemsList?.filter(item => {
+      if(nameFilter === ''){
+        return true;
+      }
+      return item.name.includes(nameFilter)
+    })
+      .filter(item => filterNumberFunction(item.price, priceFilter))
+      .filter(item => filterNumberFunction(item.stock, stockFilter));
     setFilteredItems(newFilteredItems);
-  }, [nameFilter, setFilteredItems, itemsList]);
+  }, [nameFilter, setFilteredItems, itemsList, priceFilter, stockFilter]);
 
   return(
     <div>
-      <Button color='green' style={{ marginLeft: '3%'}}>
+      <Button color='green' style={{ marginLeft: '3rem'}}>
         Add item
       </Button>
       <Table celled>
@@ -54,8 +79,14 @@ const ItemsPage = () => {
               />
                 
             </Table.HeaderCell>
-            <Table.HeaderCell>price</Table.HeaderCell>
-            <Table.HeaderCell>Stock</Table.HeaderCell>
+            <Table.HeaderCell>
+              price
+              <NumberFilters setFilter={setPriceFilter}/>
+            </Table.HeaderCell>
+            <Table.HeaderCell>
+              Stock
+              <NumberFilters setFilter={setStockFilter} />
+            </Table.HeaderCell>
           </Table.Row>
         </Table.Header>
 
