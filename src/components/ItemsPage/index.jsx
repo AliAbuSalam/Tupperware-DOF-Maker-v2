@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { useQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 import { Table, Button, Input } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import NumberFilters from './NumberFilters';
-import { GET_ALL_ITEMS } from '../gql/queries';
-import { SET_ITEMS } from '../reducers/itemReducers';
-import { SET_ACTIVE_PAGE } from '../reducers/activePageReducers';
-import parseToRp from '../lib/parseToRp';
+import AddItem from './AddItem';
+import { GET_ALL_ITEMS } from '../../gql/queries';
+import { SET_ITEMS } from '../../reducers/itemReducers';
+import parseToRp from '../../lib/parseToRp';
+import { SET_ACTIVE_PAGE } from '../../reducers/activePageReducers';
 
 const filterNumberFunction = (value, filterObject) => {
   switch(filterObject.operator){
+    case '=':
+      return value === filterObject.value[0];
     case '>':
       return value > filterObject.value[0];
     case '>=':
@@ -27,7 +30,7 @@ const filterNumberFunction = (value, filterObject) => {
 }
 
 const ItemsPage = () => {
-  const { data, loading } = useQuery(GET_ALL_ITEMS);
+  const [fetchItem ,{ data, loading, error }] = useLazyQuery(GET_ALL_ITEMS);
   const itemsList = useSelector(state => state.items);
   const [nameFilter, setNameFilter] = useState('');
   const [priceFilter, setPriceFilter] = useState({
@@ -40,13 +43,17 @@ const ItemsPage = () => {
   });
   const [filteredItems, setFilteredItems] = useState(itemsList);
   const dispatch = useDispatch();
-  dispatch(SET_ACTIVE_PAGE('items'));
+
+  useEffect(() => {
+    fetchItem();
+    dispatch(SET_ACTIVE_PAGE('items'))
+  }, []); /* eslint-disable-line */
 
   useEffect(() => {
     if(data && !loading){
       dispatch(SET_ITEMS(data.getAllItems))
     }
-  }, [data, loading, dispatch]);
+  }, [data, loading, dispatch, error]);
 
   useEffect(() => {
     const newFilteredItems = itemsList?.filter(item => {
@@ -62,6 +69,7 @@ const ItemsPage = () => {
 
   return(
     <div>
+      <AddItem style={{ marginLeft: '3rem' }}/>
       <Button color='green' style={{ marginLeft: '3rem'}}>
         Add item
       </Button>
@@ -71,7 +79,7 @@ const ItemsPage = () => {
             <Table.HeaderCell collapsing>No</Table.HeaderCell>
             <Table.HeaderCell>
               Name
-              <Input 
+              <Input
                 placeholder='Search...' 
                 floated='right' 
                 style={{ marginLeft: '5px'}}

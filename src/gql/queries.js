@@ -21,3 +21,18 @@ export const GET_ALL_ITEMS = gql`
     }
   }
 `;
+
+export const ADD_ITEM = gql`
+  mutation addItem($name: String! $initialAmount: Int $price: Int!){
+    createItem(
+      name: $name
+      initialAmount: $initialAmount
+      price: $price
+    ){
+      id
+      name
+      stock
+      price
+    }
+  }
+`;

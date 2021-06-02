@@ -17,10 +17,10 @@ const App = () => {
   const token = useSelector(state => state.token);
 
   useEffect(() => {
-    if(tokenFromLocalStorage !== null){
+    if(tokenFromLocalStorage){
       dispatch(SET_TOKEN(tokenFromLocalStorage));
     }
-  }, []);
+  }, []);/* eslint-disable-line */
 
   useEffect(() => {
     if(token){

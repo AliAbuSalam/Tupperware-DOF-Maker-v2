@@ -17,6 +17,7 @@ const Login = () => {
   useEffect(() => {
     if(data && !loading){
       dispatch(SET_TOKEN(data.login.value));
+      localStorage.setItem('token', data.login.value);
       history.push('/');
     }
   }, [data, loading, dispatch, history]);

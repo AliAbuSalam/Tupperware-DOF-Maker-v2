@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { SET_ACTIVE_PAGE } from '../reducers/activePageReducers';
 
 const Home = () => {
   const dispatch = useDispatch();
-  dispatch(SET_ACTIVE_PAGE('home'));
+
+  useEffect(() => {
+    dispatch(SET_ACTIVE_PAGE('home'));
+  }, [])
   
   return(
   <div>
