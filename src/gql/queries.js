@@ -36,3 +36,18 @@ export const ADD_ITEM = gql`
     }
   }
 `;
+
+export const EDIT_ITEM = gql`
+  mutation editItem($id: ID! $newName: String $newPrice: Int){
+    editItem(
+      id: $id
+      newName: $newName
+      newPrice: $newPrice
+    ){
+      id
+      name
+      stock
+      price
+    }
+  }
+`;

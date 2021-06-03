@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import NumberFilters from './NumberFilters';
 import AddItem from './AddItem';
+import EditItem from './EditItem';
 import { GET_ALL_ITEMS } from '../../gql/queries';
 import { SET_ITEMS } from '../../reducers/itemReducers';
 import parseToRp from '../../lib/parseToRp';
@@ -42,7 +43,17 @@ const ItemsPage = () => {
     value: null
   });
   const [filteredItems, setFilteredItems] = useState(itemsList);
+  const [editMode, setEditMode] = useState(false);
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const [itemToEdit, setItemToEdit] = useState({});
   const dispatch = useDispatch();
+
+  const handleItemClick = (item) => {
+    if(editMode){
+      setItemToEdit(item);
+      setOpenEditModal(true);
+    }
+  };
 
   useEffect(() => {
     fetchItem();
@@ -70,10 +81,16 @@ const ItemsPage = () => {
   return(
     <div>
       <AddItem style={{ marginLeft: '3rem' }}/>
-      <Button color='green' style={{ marginLeft: '3rem'}}>
-        Add item
+      <EditItem open={openEditModal} setOpen={setOpenEditModal} item={itemToEdit}/>
+      <Button color='yellow' style={{ marginLeft: '3rem'}} onClick={() => setEditMode(!editMode)}>
+        Edit item
       </Button>
-      <Table celled>
+      <Table 
+        celled 
+        selectable={editMode ? true : false} 
+        color={editMode ? 'grey': undefined} 
+        inverted={editMode ? true: false}
+      >
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell collapsing>No</Table.HeaderCell>
@@ -100,7 +117,11 @@ const ItemsPage = () => {
 
         <Table.Body>
           {filteredItems?.map((item, index) => 
-            <Table.Row key={item.id}>
+            <Table.Row 
+              key={item.id} 
+              negative={item.stock < 0} 
+              onClick={() => handleItemClick(item)}
+            >
               <Table.Cell>{index + 1}</Table.Cell>
               <Table.Cell>{item.name}</Table.Cell>
               <Table.Cell>{parseToRp(item.price)}</Table.Cell>
