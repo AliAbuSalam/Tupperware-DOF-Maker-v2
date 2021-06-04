@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import NumberFilters from './NumberFilters';
 import AddItem from './AddItem';
 import EditItem from './EditItem';
+import DeleteItem from './DeleteItem';
 import { GET_ALL_ITEMS } from '../../gql/queries';
 import { SET_ITEMS } from '../../reducers/itemReducers';
 import parseToRp from '../../lib/parseToRp';
@@ -43,15 +44,30 @@ const ItemsPage = () => {
     value: null
   });
   const [filteredItems, setFilteredItems] = useState(itemsList);
-  const [editMode, setEditMode] = useState(false);
+  const [mode, setMode] = useState('normal');
   const [openEditModal, setOpenEditModal] = useState(false);
   const [itemToEdit, setItemToEdit] = useState({});
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [itemToDelete, setItemtoDelete] = useState({});
+
   const dispatch = useDispatch();
 
   const handleItemClick = (item) => {
-    if(editMode){
+    if(mode === 'edit'){
       setItemToEdit(item);
       setOpenEditModal(true);
+    } else if(mode === 'delete'){
+      setItemtoDelete(item);
+      setOpenDeleteModal(true);
+    }
+  };
+
+  const handleModeChange = (newMode) => {
+    if(mode === 'normal'){
+      setMode(newMode);
+    }
+    if(mode === newMode){
+      setMode('normal');
     }
   };
 
@@ -82,14 +98,18 @@ const ItemsPage = () => {
     <div>
       <AddItem style={{ marginLeft: '3rem' }}/>
       <EditItem open={openEditModal} setOpen={setOpenEditModal} item={itemToEdit}/>
-      <Button color='yellow' style={{ marginLeft: '3rem'}} onClick={() => setEditMode(!editMode)}>
+      <Button color='yellow' style={{ marginLeft: '3rem'}} onClick={() => handleModeChange('edit')}>
         Edit item
+      </Button>
+      <DeleteItem open={openDeleteModal} setOpen={setOpenDeleteModal} item={itemToDelete}/>
+      <Button floated='right' color='red' style={{ marginRight: '3rem'}} onClick={() => handleModeChange('delete')}>
+        Delete item
       </Button>
       <Table 
         celled 
-        selectable={editMode ? true : false} 
-        color={editMode ? 'grey': undefined} 
-        inverted={editMode ? true: false}
+        selectable={mode !== 'normal' ? true : false} 
+        color={mode === 'edit' ? 'grey': mode === 'delete' ? 'red' : undefined} 
+        inverted={mode !== 'normal' ? true: false}
       >
         <Table.Header>
           <Table.Row>

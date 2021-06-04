@@ -6,6 +6,8 @@ const itemReducers = (state = initialState, action ) => {
       return action.data;
     case 'ADD_ITEM':
       return state.concat(action.data);
+    case 'REMOVE_ITEM':
+      return state.filter(item => item.id !== action.data);
     default:
       return state;
   }
@@ -22,6 +24,13 @@ export const ADD_ITEM = (data) => {
   return {
     type: 'ADD_ITEM',
     data
+  }
+};
+
+export const REMOVE_ITEM = (id) => {
+  return {
+    type: 'REMOVE_ITEM',
+    data: id
   }
 }
 
