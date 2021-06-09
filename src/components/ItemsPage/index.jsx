@@ -7,6 +7,7 @@ import NumberFilters from './NumberFilters';
 import AddItem from './AddItem';
 import EditItem from './EditItem';
 import DeleteItem from './DeleteItem';
+import ChangeStock from './ChangeStock';
 import { GET_ALL_ITEMS } from '../../gql/queries';
 import { SET_ITEMS } from '../../reducers/itemReducers';
 import parseToRp from '../../lib/parseToRp';
@@ -49,6 +50,8 @@ const ItemsPage = () => {
   const [itemToEdit, setItemToEdit] = useState({});
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [itemToDelete, setItemtoDelete] = useState({});
+  const [openStockModal, setOpenStockModal] = useState(false);
+  const [itemToChangeStock, setitemToChangeStock] = useState({});
 
   const dispatch = useDispatch();
 
@@ -69,6 +72,14 @@ const ItemsPage = () => {
     if(mode === newMode){
       setMode('normal');
     }
+  };
+
+  const handleStockChange = (id, name) => {
+    setitemToChangeStock({
+      id,
+      name
+    });
+    setOpenStockModal(true);
   };
 
   useEffect(() => {
@@ -105,6 +116,7 @@ const ItemsPage = () => {
       <Button floated='right' color='red' style={{ marginRight: '3rem'}} onClick={() => handleModeChange('delete')}>
         Delete item
       </Button>
+      <ChangeStock />
       <Table 
         celled 
         selectable={mode !== 'normal' ? true : false} 
@@ -145,7 +157,16 @@ const ItemsPage = () => {
               <Table.Cell>{index + 1}</Table.Cell>
               <Table.Cell>{item.name}</Table.Cell>
               <Table.Cell>{parseToRp(item.price)}</Table.Cell>
-              <Table.Cell>{item.stock}</Table.Cell>
+              <Table.Cell>
+                {item.stock}
+                <Button 
+                  floated='right' 
+                  size='mini' 
+                  icon='arrow alternate circle right' 
+                  circular
+                  onClick={() => handleStockChange(item.id, item.name)}
+                />
+              </Table.Cell>
             </Table.Row>
           )}
         </Table.Body>

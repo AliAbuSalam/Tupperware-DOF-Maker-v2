@@ -23,11 +23,12 @@ export const GET_ALL_ITEMS = gql`
 `;
 
 export const ADD_ITEM = gql`
-  mutation addItem($name: String! $initialAmount: Int $price: Int!){
+  mutation addItem($name: String! $initialAmount: Int $price: Int! $date: DateInput!){
     createItem(
       name: $name
       initialAmount: $initialAmount
       price: $price
+      orderDate: $date
     ){
       id
       name

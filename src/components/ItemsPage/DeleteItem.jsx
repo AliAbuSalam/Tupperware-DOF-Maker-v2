@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Modal, Button, Message } from 'semantic-ui-react';
 import { useMutation } from '@apollo/client';
 import { useDispatch } from 'react-redux';
@@ -7,8 +7,6 @@ import { DELETE_ITEM } from '../../gql/queries';
 import { REMOVE_ITEM } from '../../reducers/itemReducers';
 
 const DeleteItem = ({ open, setOpen, item}) => {
-  //const initialItemName = '';
-  //const [itemName, setItemName] = useState(initialItemName);
   const [errorMessage, setErrorMessage] = useState('');
   const [mutate, { loading }] = useMutation(DELETE_ITEM);
   const dispatch = useDispatch();
@@ -32,12 +30,6 @@ const DeleteItem = ({ open, setOpen, item}) => {
     setErrorMessage('');
     setOpen(false);
   }
-
-  /*useEffect(() => {
-    if(item.id){
-      setItemName(item.name);
-    }
-  }, [item]);*/
 
   return(
     <Modal
