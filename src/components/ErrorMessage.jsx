@@ -1,7 +1,7 @@
 import React from 'react';
 import { Message } from 'semantic-ui-react';
 
-const ErrorMessage = (message) => {
+const ErrorMessage = ({ message }) => {
   return(
     <Message hidden={!message} error={true} style={{ textAlign: 'center' }}>
       <Message.Header>ERROR</Message.Header>

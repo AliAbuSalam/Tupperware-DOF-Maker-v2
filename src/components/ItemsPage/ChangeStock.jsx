@@ -58,7 +58,7 @@ const ChangeStock = ({ item, open, setOpen, action }) => {
 
   return(
     <Modal
-      onClose={() => setOpen(false)}
+      onClose={() => closeModal()}
       onOpen={() => setOpen(true)}
       open={open}
     >
@@ -68,7 +68,7 @@ const ChangeStock = ({ item, open, setOpen, action }) => {
           <Input
             label='Number of items'
             value={value}
-            onChange={({ target }) => setValue(forceInputToNumber(target.value))}
+            onChange={({ target }) => setValue(parseInt(forceInputToNumber(target.value)))}
           />
           {actionState === 'ADD' 
             ? <DateInput date={date} setDate={setDate}/>
@@ -79,8 +79,8 @@ const ChangeStock = ({ item, open, setOpen, action }) => {
       </Modal.Content>
       <Modal.Actions>
         {actionState === 'ADD'
-          ? <Button circular icon='add' onClick={handleAddOrder} loading={resultOfAdd.loading}/>
-          : <Button circular icon='minus' onClick={handleReduceOrder} loading={resultOfReduce.loading}/>
+          ? <Button circular icon='add' onClick={handleAddOrder} loading={resultOfAdd.loading} color='green'/>
+          : <Button circular icon='minus' onClick={handleReduceOrder} loading={resultOfReduce.loading} color='orange'/>
         }
       </Modal.Actions>
     </Modal>

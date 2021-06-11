@@ -31,10 +31,6 @@ const DateInput = ({ date, setDate }) => {
   };
 
   useEffect(() => {
-    console.log('date: ', date);
-  }, [date]);
-
-  useEffect(() => {
     setMonthToParse(date.month);
   }, [date.month, setMonthToParse]);
 
@@ -57,6 +53,7 @@ const DateInput = ({ date, setDate }) => {
         <Form.Dropdown 
           label='Week'
           placeholder='Week'
+          search
           selection
           options={weekValue}
           onChange={handleChangeWeek}
