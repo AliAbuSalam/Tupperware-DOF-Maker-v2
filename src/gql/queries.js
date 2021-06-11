@@ -63,3 +63,32 @@ export const DELETE_ITEM = gql`
     }
   }
 `;
+
+export const ADD_ORDER = gql`
+  mutation addOrder($id: ID! $date: DateInput! $numberOfItems: Int!){
+    addOrder(
+      itemId: $id
+      orderDate: $date
+      numberOfItems: $numberOfItems
+    ){
+      id
+      name
+      stock
+      price
+    }
+  }
+`;
+
+export const REDUCE_ORDER = gql`
+  mutation reduceOrder($id: ID! $numberOfItems: Int!){
+    reduceOrder(
+      itemId: $id
+      numberOfItems: $numberOfItems
+    ){
+      id
+      name
+      stock
+      price
+    }
+  }
+`;

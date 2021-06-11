@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 
 import { DELETE_ITEM } from '../../gql/queries';
 import { REMOVE_ITEM } from '../../reducers/itemReducers';
+import ErrorMessage from '../ErrorMessage';
 
 const DeleteItem = ({ open, setOpen, item}) => {
   const [errorMessage, setErrorMessage] = useState('');
@@ -41,10 +42,7 @@ const DeleteItem = ({ open, setOpen, item}) => {
       <Modal.Content>
         Delete item {item?.name}?
       </Modal.Content>
-      <Message hidden={!errorMessage} error style={{ textAlign: 'center' }}>
-        <Message.Header>ERROR</Message.Header>
-        {errorMessage}
-      </Message>
+      <ErrorMessage message={errorMessage}/>
       <Modal.Actions>
         <Button onClick={handleClose}>Cancel</Button>
         <Button loading={loading} color='red'

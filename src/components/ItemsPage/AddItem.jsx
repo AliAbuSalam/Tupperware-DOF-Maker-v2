@@ -7,6 +7,7 @@ import forceInputToNumber from '../../lib/forceInputToNumber';
 import { ADD_ITEM } from '../../gql/queries';
 import { ADD_ITEM as ADD_ITEM_TO_STORE } from '../../reducers/itemReducers'; 
 import DateInput from '../DateInput';
+import ErrorMessage from '../ErrorMessage';
 
 const AddItem = (props) => {
   const [open, setOpen] = useState(false);
@@ -88,10 +89,7 @@ const AddItem = (props) => {
           />
         </Form>
       </Modal.Content>
-      <Message error={true} hidden={!error} style={{ textAlign: 'center' }}>
-        <Message.Header>ERROR</Message.Header>
-        {error?.message}
-      </Message>
+      <ErrorMessage message={error?.message}/>
       <Modal.Actions>
         <Button onClick={() => setOpen(false)}>
           Cancel

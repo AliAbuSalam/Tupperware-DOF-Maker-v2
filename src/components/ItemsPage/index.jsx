@@ -47,20 +47,20 @@ const ItemsPage = () => {
   const [filteredItems, setFilteredItems] = useState(itemsList);
   const [mode, setMode] = useState('normal');
   const [openEditModal, setOpenEditModal] = useState(false);
-  const [itemToEdit, setItemToEdit] = useState({});
+  const [activeItem, setActiveItem] = useState({});
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
-  const [itemToDelete, setItemtoDelete] = useState({});
   const [openStockModal, setOpenStockModal] = useState(false);
+  const [stockModalAction, setStockModalAction] = useState('ADD');
   const [itemToChangeStock, setitemToChangeStock] = useState({});
 
   const dispatch = useDispatch();
 
   const handleItemClick = (item) => {
     if(mode === 'edit'){
-      setItemToEdit(item);
+      setActiveItem(item);
       setOpenEditModal(true);
     } else if(mode === 'delete'){
-      setItemtoDelete(item);
+      setActiveItem(item);
       setOpenDeleteModal(true);
     }
   };
@@ -74,11 +74,9 @@ const ItemsPage = () => {
     }
   };
 
-  const handleStockChange = (id, name) => {
-    setitemToChangeStock({
-      id,
-      name
-    });
+  const handleStockChange = (item, action) => {
+    setActiveItem(item);
+    setStockModalAction(action);
     setOpenStockModal(true);
   };
 
@@ -108,15 +106,15 @@ const ItemsPage = () => {
   return(
     <div>
       <AddItem style={{ marginLeft: '3rem' }}/>
-      <EditItem open={openEditModal} setOpen={setOpenEditModal} item={itemToEdit}/>
+      <EditItem open={openEditModal} setOpen={setOpenEditModal} item={activeItem}/>
       <Button color='yellow' style={{ marginLeft: '3rem'}} onClick={() => handleModeChange('edit')}>
         Edit item
       </Button>
-      <DeleteItem open={openDeleteModal} setOpen={setOpenDeleteModal} item={itemToDelete}/>
+      <DeleteItem open={openDeleteModal} setOpen={setOpenDeleteModal} item={activeItem}/>
       <Button floated='right' color='red' style={{ marginRight: '3rem'}} onClick={() => handleModeChange('delete')}>
         Delete item
       </Button>
-      <ChangeStock />
+      <ChangeStock open={openStockModal} setOpen={setOpenStockModal} action={stockModalAction} item={activeItem}/>
       <Table 
         celled 
         selectable={mode !== 'normal' ? true : false} 
@@ -158,13 +156,22 @@ const ItemsPage = () => {
               <Table.Cell>{item.name}</Table.Cell>
               <Table.Cell>{parseToRp(item.price)}</Table.Cell>
               <Table.Cell>
+                <Button 
+                  floated='right'
+                  color='green' 
+                  size='mini' 
+                  icon='plus' 
+                  circular
+                  onClick={() => handleStockChange(item, 'ADD')}
+                />
                 {item.stock}
                 <Button 
-                  floated='right' 
+                  floated='right'
+                  color='orange' 
                   size='mini' 
-                  icon='arrow alternate circle right' 
+                  icon='minus' 
                   circular
-                  onClick={() => handleStockChange(item.id, item.name)}
+                  onClick={() => handleStockChange(item, 'REDUCE')}
                 />
               </Table.Cell>
             </Table.Row>

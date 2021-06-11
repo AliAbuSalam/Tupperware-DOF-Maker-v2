@@ -3,6 +3,7 @@ import { Modal, Form, Button, Message } from 'semantic-ui-react';
 import { useMutation } from '@apollo/client';
 
 import { EDIT_ITEM } from '../../gql/queries';
+import ErrorMessage from '../ErrorMessage';
 
 const EditItem = ({ open, setOpen, item }) => {
   const initialItemState = {
@@ -83,10 +84,7 @@ const EditItem = ({ open, setOpen, item }) => {
             onChange={({ target }) => handleChange('price', target.value)}
           />
         </Form>
-        <Message hidden={!errorMessage} error={true} style={{ textAlign: 'center' }}>
-          <Message.Header>ERROR</Message.Header>
-          {errorMessage}
-        </Message>
+        <ErrorMessage message={errorMessage}/>
       </Modal.Content>
       <Modal.Actions>
         <Button onClick={handleClose}>
