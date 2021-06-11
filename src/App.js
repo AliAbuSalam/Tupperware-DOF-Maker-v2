@@ -9,6 +9,7 @@ import Login from './components/Login';
 import Home from './components/Home';
 import ItemsPage from './components/ItemsPage';
 import NavBar from './components/NavBar';
+import PersonnelPage from './components/PersonnelPage';
 import { SET_TOKEN } from './reducers/tokenReducers';
 
 const App = () => {
@@ -41,6 +42,9 @@ const App = () => {
       <Switch>
         <Route path='/items'>
           <ItemsPage />
+        </Route>
+        <Route path='/personnel'>
+          <PersonnelPage />
         </Route>
         <Route path='/login'>
           <Login />
