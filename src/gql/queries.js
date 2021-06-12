@@ -92,3 +92,14 @@ export const REDUCE_ORDER = gql`
     }
   }
 `;
+
+export const GET_ALL_PERSONNEL = gql`
+  query getAllPersonnel {
+    getPersons {
+      id
+      name
+      consultantId
+      position
+    }
+  }
+`;

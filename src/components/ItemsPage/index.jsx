@@ -51,7 +51,6 @@ const ItemsPage = () => {
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [openStockModal, setOpenStockModal] = useState(false);
   const [stockModalAction, setStockModalAction] = useState('ADD');
-  const [itemToChangeStock, setitemToChangeStock] = useState({});
 
   const dispatch = useDispatch();
 
