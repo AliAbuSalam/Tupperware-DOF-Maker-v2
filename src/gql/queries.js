@@ -100,6 +100,28 @@ export const GET_ALL_PERSONNEL = gql`
       name
       consultantId
       position
+      upline {
+        id
+      }
+    }
+  }
+`;
+
+export const CREATE_PERSON = gql`
+  mutation createPerson($name: String!, $consultantId: ID!, $position: Position!, $upline: ID!){
+    createPerson(
+      name: $name
+      consultantId: $consultantId
+      position: $position
+      upline: $upline
+    ){
+      id
+      name
+      consultantId
+      position
+      upline {
+        id
+      }
     }
   }
 `;
