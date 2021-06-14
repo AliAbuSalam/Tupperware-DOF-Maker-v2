@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, Form, Button, Message } from 'semantic-ui-react';
+import { Modal, Form, Button } from 'semantic-ui-react';
 import { useMutation } from '@apollo/client';
 import { useDispatch } from 'react-redux';
 

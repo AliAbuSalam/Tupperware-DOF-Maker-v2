@@ -6,6 +6,13 @@ const personReducers = (state = initialState, action) => {
       return action.data;
     case 'ADD_PERSON':
       return state.concat(action.data);
+    case 'EDIT_PERSON':
+      return state.map(person => {
+        if(person.id === action.data.id){
+          return action.data
+        }
+        return person;
+      })
     default:
       return state;
   }
@@ -24,5 +31,12 @@ export const ADD_PERSON = (data) => {
     data
   };
 };
+
+export const EDIT_PERSON = (data) => {
+  return {
+    type: 'EDIT_PERSON',
+    data
+  }
+}
 
 export default personReducers;

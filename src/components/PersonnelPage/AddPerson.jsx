@@ -56,7 +56,7 @@ const AddPerson = () => {
       console.log('data: ', result.data.createPerson);
       dispatch(ADD_PERSON(result.data.createPerson));
       handleClose();
-    }).catch(error => console.log(error));
+    }).catch(error => console.log(error.message));
   };
 
   useEffect(() => {

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useLazyQuery } from '@apollo/client';
-import { Table, Button, Input } from 'semantic-ui-react';
+import { Button, Input, Table } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import NumberFilters from './NumberFilters';
+import CustomTable from '../Table';
 import AddItem from './AddItem';
 import EditItem from './EditItem';
 import DeleteItem from './DeleteItem';
@@ -114,12 +115,7 @@ const ItemsPage = () => {
         Delete item
       </Button>
       <ChangeStock open={openStockModal} setOpen={setOpenStockModal} action={stockModalAction} item={activeItem}/>
-      <Table 
-        celled 
-        selectable={mode !== 'normal' ? true : false} 
-        color={mode === 'edit' ? 'grey': mode === 'delete' ? 'red' : undefined} 
-        inverted={mode !== 'normal' ? true: false}
-      >
+      <CustomTable mode={mode}>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell collapsing>No</Table.HeaderCell>
@@ -176,7 +172,7 @@ const ItemsPage = () => {
             </Table.Row>
           )}
         </Table.Body>
-      </Table>
+      </CustomTable>
     </div>
   );
 };

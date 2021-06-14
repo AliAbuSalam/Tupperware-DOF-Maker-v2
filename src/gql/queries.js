@@ -108,7 +108,7 @@ export const GET_ALL_PERSONNEL = gql`
 `;
 
 export const CREATE_PERSON = gql`
-  mutation createPerson($name: String!, $consultantId: ID!, $position: Position!, $upline: ID!){
+  mutation createPerson($name: String!, $consultantId: ID!, $position: Position!, $upline: ID){
     createPerson(
       name: $name
       consultantId: $consultantId
@@ -125,3 +125,29 @@ export const CREATE_PERSON = gql`
     }
   }
 `;
+
+export const EDIT_PERSON = gql`
+  mutation editPerson(
+    $id: ID!
+    $name: String
+    $consultantId: String
+    $position: Position
+    $upline: ID
+  ){
+    editPerson(
+      id: $id,
+      newName: $name,
+      consultantId: $consultantId,
+      position: $position
+      upline: $upline
+    ){
+      id
+      name
+      consultantId
+      position
+      upline {
+        id
+      }
+    }
+  }
+`
