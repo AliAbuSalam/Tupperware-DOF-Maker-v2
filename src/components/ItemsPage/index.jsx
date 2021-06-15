@@ -13,6 +13,7 @@ import { GET_ALL_ITEMS } from '../../gql/queries';
 import { SET_ITEMS } from '../../reducers/itemReducers';
 import parseToRp from '../../lib/parseToRp';
 import { SET_ACTIVE_PAGE } from '../../reducers/activePageReducers';
+import Filter from '../PersonnelPage/Filter';
 
 const filterNumberFunction = (value, filterObject) => {
   switch(filterObject.operator){
@@ -92,12 +93,7 @@ const ItemsPage = () => {
   }, [data, loading, dispatch, error]);
 
   useEffect(() => {
-    const newFilteredItems = itemsList?.filter(item => {
-      if(nameFilter === ''){
-        return true;
-      }
-      return item.name.includes(nameFilter)
-    })
+    const newFilteredItems = itemsList?.filter(item => item.name.toLowerCase().includes(nameFilter.toLowerCase()))
       .filter(item => filterNumberFunction(item.price, priceFilter))
       .filter(item => filterNumberFunction(item.stock, stockFilter));
     setFilteredItems(newFilteredItems);
@@ -121,11 +117,9 @@ const ItemsPage = () => {
             <Table.HeaderCell collapsing>No</Table.HeaderCell>
             <Table.HeaderCell>
               Name
-              <Input
-                placeholder='Search...' 
-                floated='right' 
-                style={{ marginLeft: '5px'}}
-                onChange={({ target }) => setNameFilter(target.value)}
+              <Filter
+                value={nameFilter}
+                setFilter={setNameFilter}
               />
                 
             </Table.HeaderCell>

@@ -17,8 +17,7 @@ const DeletePerson = ({ open, setOpen, activePerson, setActivePerson }) => {
       variables: {
         id
       }
-    }).then(({ data }) =>{
-      console.log('data: ', data);
+    }).then(() =>{
       dispatch(REMOVE_PERSON(id));
       handleClose();
     }).catch(error => {
