@@ -8,6 +8,7 @@ import positionObjects from '../../lib/positionObject';
 import ErrorMessage from '../ErrorMessage';
 import { CREATE_PERSON } from '../../gql/queries';
 import { ADD_PERSON } from '../../reducers/personReducers';
+import PositionDropdown from './PositionDropdown';
 
 const AddPerson = () => {
   const [open, setOpen] = useState(false);
@@ -85,13 +86,9 @@ const AddPerson = () => {
             value={consultantId}
             onChange={({ target }) => setConsultantId(target.value)}
           />
-          <Form.Dropdown 
-            label='Position'
-            placeholder='Position'
-            search
-            selection
-            options={positionObjects}
+          <PositionDropdown
             onChange={handlePositionChange}
+            clearable={true}
           />
           <Form.Dropdown 
             label='Upline'

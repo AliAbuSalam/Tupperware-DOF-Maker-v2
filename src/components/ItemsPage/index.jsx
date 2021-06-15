@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLazyQuery } from '@apollo/client';
-import { Button, Input, Table } from 'semantic-ui-react';
+import { Button, Table } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import NumberFilters from './NumberFilters';
