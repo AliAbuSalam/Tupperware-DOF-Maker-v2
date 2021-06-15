@@ -12,7 +12,9 @@ const personReducers = (state = initialState, action) => {
           return action.data
         }
         return person;
-      })
+      });
+    case 'REMOVE_PERSON':
+      return state.filter(person => person.id !== action.data);
     default:
       return state;
   }
@@ -38,5 +40,12 @@ export const EDIT_PERSON = (data) => {
     data
   }
 }
+
+export const REMOVE_PERSON = (data) => {
+  return {
+    type: 'REMOVE_PERSON',
+    data
+  }
+};
 
 export default personReducers;

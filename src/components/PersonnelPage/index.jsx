@@ -9,6 +9,7 @@ import { GET_ALL_PERSONNEL } from '../../gql/queries';
 import { SET_PEOPLE } from '../../reducers/personReducers';
 import AddPerson from './AddPerson';
 import EditPerson from './EditPerson';
+import DeletePerson from './DeletePerson';
 
 const PersonnelPage = () => {
   const people = useSelector(state => state.people);
@@ -16,13 +17,14 @@ const PersonnelPage = () => {
   const [activePerson, setActivePerson] = useState(undefined);
   const [mode, setMode] = useState('normal');
   const [openEditModal, setOpenEditModal] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const dispatch = useDispatch();
 
-  const handleEditClick = () => {
-    if(mode === 'edit'){
+  const handleActionButtonClick = (buttonMode) => {
+    if(mode === buttonMode){
       setMode('normal');
-    } else if(mode !== 'edit'){
-      setMode('edit');
+    } else if(mode !== buttonMode){
+      setMode(buttonMode);
     }
   };
 
@@ -30,6 +32,10 @@ const PersonnelPage = () => {
     if(mode === 'edit'){
       setActivePerson(person);
       setOpenEditModal(true);
+    }
+    if(mode === 'delete'){
+      setActivePerson(person);
+      setOpenDeleteModal(true);
     }
   };
 
@@ -48,7 +54,21 @@ const PersonnelPage = () => {
     <div>
       <AddPerson />
       <EditPerson activePerson={activePerson} open={openEditModal} setOpen={setOpenEditModal} setActivePerson={setActivePerson}/>
-      <Button color='yellow' style={{ marginLeft: '3rem' }} onClick={handleEditClick}>Edit Person</Button>
+      <DeletePerson activePerson={activePerson} open={openDeleteModal} setOpen={setOpenDeleteModal} setActivePerson={setActivePerson}/>
+      <Button 
+        color='yellow' 
+        style={{ marginLeft: '3rem' }} 
+        onClick={() =>handleActionButtonClick('edit')}
+      >
+        Edit Person
+      </Button>
+      <Button 
+        color='red' 
+        style={{ marginRight: '3rem'}} 
+        floated='right' onClick={() => handleActionButtonClick('delete')}
+      >
+        Delete Person
+      </Button>
       <CustomTable mode={mode}>
         <Table.Header>
           <Table.Row>

@@ -44,16 +44,11 @@ const EditPerson = ({ open, setOpen, activePerson, setActivePerson }) => {
       ...(position !== activePerson.position) && { position },
       ...(upline !== activePerson.upline) && { upline }
     };
-    console.log('editedPerson: ', editedPerson);
-    console.log('mutating data....');
     mutate({
       variables: editedPerson
     }).then(({ data }) => {
-      console.log('dispatching data....');
       dispatch(EDIT_PERSON_STATE(data));
-      console.log('closing modal....');
       handleClose();
-      console.log('modal closed....');
     }).catch(error => setError(error));
   };
 
