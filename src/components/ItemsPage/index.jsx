@@ -3,7 +3,6 @@ import { useLazyQuery } from '@apollo/client';
 import { Button, Table } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import NumberFilters from './NumberFilters';
 import CustomTable from '../Table';
 import AddItem from './AddItem';
 import EditItem from './EditItem';
@@ -13,29 +12,11 @@ import { GET_ALL_ITEMS } from '../../gql/queries';
 import { SET_ITEMS } from '../../reducers/itemReducers';
 import parseToRp from '../../lib/parseToRp';
 import { SET_ACTIVE_PAGE } from '../../reducers/activePageReducers';
-import Filter from '../PersonnelPage/Filter';
-
-const filterNumberFunction = (value, filterObject) => {
-  switch(filterObject.operator){
-    case '=':
-      return value === filterObject.value[0];
-    case '>':
-      return value > filterObject.value[0];
-    case '>=':
-      return value >= filterObject.value[0];
-    case '<':
-      return value < filterObject.value[0];
-    case '<=':
-      return value <= filterObject.value[0];
-    case 'range':
-      return value >= filterObject.value[0] && value <= filterObject.value[1];
-    default:
-      return true;
-  }
-}
+import Filter from '../Filter';
+import NumberFilters, { filterNumberFunction } from '../NumberFilters';
 
 const ItemsPage = () => {
-  const [fetchItem ,{ data, loading, error }] = useLazyQuery(GET_ALL_ITEMS);
+  const [fetchItem, { data, loading, error }] = useLazyQuery(GET_ALL_ITEMS);
   const itemsList = useSelector(state => state.items);
   const [nameFilter, setNameFilter] = useState('');
   const [priceFilter, setPriceFilter] = useState({

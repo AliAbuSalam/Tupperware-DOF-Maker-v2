@@ -32,6 +32,14 @@ const NavBar = () => {
         Items
       </Menu.Item>
       <Menu.Item
+        name='itemsStar'
+        as={Link}
+        to='/itemsStar'
+        active={activePage === 'itemsStar'}
+      >
+        Star-Items
+      </Menu.Item>
+      <Menu.Item
         name='dofs'
         as={Link}
         to='/dofs'

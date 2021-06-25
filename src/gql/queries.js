@@ -64,6 +64,24 @@ export const DELETE_ITEM = gql`
   }
 `;
 
+export const GET_ALL_ITEMS_STAR = gql`
+  query getAllItemsStar {
+    getAllItemsStar {
+      id
+      name
+      starCost
+    }
+  }
+`;
+
+export const GET_STAR_PRICE = gql`
+  query getStarPrice {
+    getStarPrice {
+      price
+    }
+  }
+`;
+
 export const ADD_ORDER = gql`
   mutation addOrder($id: ID! $date: DateInput! $numberOfItems: Int!){
     addOrder(
@@ -157,6 +175,19 @@ export const DELETE_PERSON = gql`
     deletePerson(id: $id){
       status
       errorMessage
+    }
+  }
+`;
+
+export const ADD_ITEM_STAR = gql`
+  mutation addItemStar($name: String! $starCost: Int!) {
+    createItemStar(
+      name: $name
+      starCost: $starCost
+    ){
+      id
+      name
+      starCost
     }
   }
 `;

@@ -10,7 +10,7 @@ import { SET_PEOPLE } from '../../reducers/personReducers';
 import AddPerson from './AddPerson';
 import EditPerson from './EditPerson';
 import DeletePerson from './DeletePerson';
-import Filter from './Filter';
+import Filter from '../Filter';
 import PositionDropdown from './PositionDropdown';
 
 const PersonnelPage = () => {
@@ -101,6 +101,7 @@ const PersonnelPage = () => {
           <Table.Row>
             <Table.HeaderCell>
               Name
+              
               <Filter filter={nameFilter} setFilter={setNameFilter}/>
             </Table.HeaderCell>
             <Table.HeaderCell>

@@ -79,4 +79,23 @@ const NumberFilters = ({ setFilter }) => {
   );
 };
 
+export const filterNumberFunction = (value, filterObject) => {
+  switch(filterObject.operator){
+    case '=':
+      return value === filterObject.value[0];
+    case '>':
+      return value > filterObject.value[0];
+    case '>=':
+      return value >= filterObject.value[0];
+    case '<':
+      return value < filterObject.value[0];
+    case '<=':
+      return value <= filterObject.value[0];
+    case 'range':
+      return value >= filterObject.value[0] && value <= filterObject.value[1];
+    default:
+      return true;
+  }
+}
+
 export default NumberFilters;
