@@ -54,7 +54,10 @@ const AddItemStar = () => {
     >
       <Modal.Header>Add Star Item</Modal.Header>
       <Modal.Content>
-        <Form>
+        <Form
+          id='add-item-star'
+          onSubmit={handleSubmit}
+        >
           <Form.Input 
             label='Name'
             placeholder='Name'
@@ -75,7 +78,8 @@ const AddItemStar = () => {
           circular 
           icon='plus' 
           color='green' 
-          onClick={handleSubmit}
+          type='submit'
+          form='add-item-star'
           disabled={!name || !starCost}
           loading={loading}
         />
