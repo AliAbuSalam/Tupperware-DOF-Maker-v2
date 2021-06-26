@@ -191,3 +191,17 @@ export const ADD_ITEM_STAR = gql`
     }
   }
 `;
+
+export const EDIT_ITEM_STAR = gql`
+  mutation editItemStar($name: String! $starCost: Int! $id: ID!){
+    editItemStar(
+      id: $id
+      newName: $name
+      starCost: $starCost
+    ){
+      id
+      name
+      starCost
+    }
+  }
+`;

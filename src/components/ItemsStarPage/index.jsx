@@ -13,6 +13,7 @@ import Filter from '../Filter';
 import NumberFilters, { filterNumberFunction } from '../NumberFilters';
 import parseToRp from '../../lib/parseToRp';
 import AddItemStar from './AddItemStar';
+import EditItemStar from './EditItemStar';
 
 const ItemsStarPage = () => {
   const items = useSelector(state => state.itemsStar.itemsList);
@@ -29,8 +30,25 @@ const ItemsStarPage = () => {
     operator: 'none',
     value: null
   });
-  const [openAddItemStar, setOpenAddItemStar] = useState(false);
+  const [mode, setMode] = useState('normal');
+  const [openEditItemStar, setOpenEditItemStar] = useState(false);
+  const [activeItem, setActiveItem] = useState();
   const dispatch = useDispatch();
+
+  const handleEditClick = () => {
+    if(mode !== 'edit'){
+      setMode('edit');
+    } else if(mode === 'edit'){
+      setMode('normal');
+    }
+  }
+
+  const handleItemClick = (item) => {
+    if(mode === 'edit'){
+      setActiveItem(item);
+      setOpenEditItemStar(true);
+    }
+  };
 
   useEffect(() => {
     dispatch(SET_ACTIVE_PAGE('itemsStar'));
@@ -59,8 +77,10 @@ const ItemsStarPage = () => {
 
   return(
     <div>
-      <AddItemStar open={openAddItemStar} setOpen={setOpenAddItemStar}/>
-      <CustomTable mode='normal'>
+      <AddItemStar />
+      <Button color='yellow' style={{ marginLeft: '3rem' }} onClick={handleEditClick}>Edit Star Item</Button>
+      <EditItemStar open={openEditItemStar} setOpen={setOpenEditItemStar} activeItem={activeItem} setActiveItem={setActiveItem}/>
+      <CustomTable mode={mode}>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell collapsing>
@@ -80,6 +100,7 @@ const ItemsStarPage = () => {
         <Table.Body>
           {filteredItems.map(item => 
             <Table.Row
+              onClick={() => handleItemClick(item)}
               key={item.id}
             >
               <Table.Cell>{item.name}</Table.Cell>
