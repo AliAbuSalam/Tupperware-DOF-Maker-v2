@@ -14,6 +14,7 @@ import NumberFilters, { filterNumberFunction } from '../NumberFilters';
 import parseToRp from '../../lib/parseToRp';
 import AddItemStar from './AddItemStar';
 import EditItemStar from './EditItemStar';
+import DeleteItemStar from './DeleteItemStar';
 
 const ItemsStarPage = () => {
   const items = useSelector(state => state.itemsStar.itemsList);
@@ -32,13 +33,14 @@ const ItemsStarPage = () => {
   });
   const [mode, setMode] = useState('normal');
   const [openEditItemStar, setOpenEditItemStar] = useState(false);
+  const [openDeleteItemStar, setOpenDeleteItemStar] = useState(false);
   const [activeItem, setActiveItem] = useState();
   const dispatch = useDispatch();
 
-  const handleEditClick = () => {
-    if(mode !== 'edit'){
-      setMode('edit');
-    } else if(mode === 'edit'){
+  const handleModeButton = (buttonType) => {
+    if(mode !== buttonType){
+      setMode(buttonType);
+    } else if(mode === buttonType){
       setMode('normal');
     }
   }
@@ -47,6 +49,11 @@ const ItemsStarPage = () => {
     if(mode === 'edit'){
       setActiveItem(item);
       setOpenEditItemStar(true);
+    }
+
+    if(mode === 'delete'){
+      setActiveItem(item);
+      setOpenDeleteItemStar(true);
     }
   };
 
@@ -78,8 +85,10 @@ const ItemsStarPage = () => {
   return(
     <div>
       <AddItemStar />
-      <Button color='yellow' style={{ marginLeft: '3rem' }} onClick={handleEditClick}>Edit Star Item</Button>
+      <Button color='yellow' style={{ marginLeft: '3rem' }} onClick={() => handleModeButton('edit')}>Edit Star Item</Button>
       <EditItemStar open={openEditItemStar} setOpen={setOpenEditItemStar} activeItem={activeItem} setActiveItem={setActiveItem}/>
+      <Button color='red' floated='right' style={{ marginRight: '3rem' }} onClick={() => handleModeButton('delete')}>Delete Star Item</Button>
+      <DeleteItemStar open={openDeleteItemStar} setOpen={setOpenDeleteItemStar} activeItem={activeItem} setActiveItem={setActiveItem}/>
       <CustomTable mode={mode}>
         <Table.Header>
           <Table.Row>

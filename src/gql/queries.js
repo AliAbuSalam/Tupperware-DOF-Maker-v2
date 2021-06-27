@@ -205,3 +205,14 @@ export const EDIT_ITEM_STAR = gql`
     }
   }
 `;
+
+export const DELETE_ITEM_STAR = gql`
+  mutation deleteItemStar($id: ID!){
+    deleteItemStar(
+      id: $id
+    ){
+      status
+      errorMessage
+    }
+  }
+`;
