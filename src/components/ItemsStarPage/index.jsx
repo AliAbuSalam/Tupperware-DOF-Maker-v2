@@ -15,10 +15,10 @@ import parseToRp from '../../lib/parseToRp';
 import AddItemStar from './AddItemStar';
 import EditItemStar from './EditItemStar';
 import DeleteItemStar from './DeleteItemStar';
+import PricePerStar from './PricePerStar';
 
 const ItemsStarPage = () => {
   const items = useSelector(state => state.itemsStar.itemsList);
-  const starPrice = useSelector(state => state.itemsStar.price);
   const [fetchItems, { data: dataItems, loading: loadingItems }] = useLazyQuery(GET_ALL_ITEMS_STAR);
   const [fetchPrice, { data: dataPrice, loading: loadingPrice }] = useLazyQuery(GET_STAR_PRICE);
   const [filteredItems, setFilteredItems] = useState([]);
@@ -84,11 +84,17 @@ const ItemsStarPage = () => {
 
   return(
     <div>
-      <AddItemStar />
-      <Button color='yellow' style={{ marginLeft: '3rem' }} onClick={() => handleModeButton('edit')}>Edit Star Item</Button>
-      <EditItemStar open={openEditItemStar} setOpen={setOpenEditItemStar} activeItem={activeItem} setActiveItem={setActiveItem}/>
-      <Button color='red' floated='right' style={{ marginRight: '3rem' }} onClick={() => handleModeButton('delete')}>Delete Star Item</Button>
-      <DeleteItemStar open={openDeleteItemStar} setOpen={setOpenDeleteItemStar} activeItem={activeItem} setActiveItem={setActiveItem}/>
+      <div>
+        <AddItemStar />
+        <Button color='yellow' style={{ marginLeft: '3rem' }} onClick={() => handleModeButton('edit')}>Edit Star Item</Button>
+        <EditItemStar open={openEditItemStar} setOpen={setOpenEditItemStar} activeItem={activeItem} setActiveItem={setActiveItem}/>
+        <Button color='red' floated='right' style={{ marginRight: '3rem' }} onClick={() => handleModeButton('delete')}>Delete Star Item</Button>
+        <DeleteItemStar open={openDeleteItemStar} setOpen={setOpenDeleteItemStar} activeItem={activeItem} setActiveItem={setActiveItem}/>
+      </div>
+      <PricePerStar style={{
+        marginLeft: '3rem',
+        marginTop: '1rem'
+      }}/>
       <CustomTable mode={mode}>
         <Table.Header>
           <Table.Row>
