@@ -216,3 +216,13 @@ export const DELETE_ITEM_STAR = gql`
     }
   }
 `;
+
+export const SET_STAR_PRICE = gql`
+  mutation setStarPrice($price: Int!) {
+    setStarPrice(
+      price: $price
+    ){
+      price
+    }
+  }
+`;
