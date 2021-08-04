@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Table } from 'semantic-ui-react';
 
 import parseToRp from '../../lib/parseToRp';
 import ItemRow from './ItemRow';
+import PriceTargetInput from './PriceTargetInput';
 
 const TableOfItems = ({ items, totalPrice, pageType, itemType }) => {
+  const [target, setTarget] = useState('');
+
   return(
     <Table>
       <Table.Header>
@@ -35,6 +38,10 @@ const TableOfItems = ({ items, totalPrice, pageType, itemType }) => {
             </b>
           </Table.HeaderCell>
         </Table.Row>
+        {pageType === 'singleDof' && itemType !== 'STAR_ITEM' 
+          ? <PriceTargetInput currentTotal={totalPrice}/>
+          : <></>
+        }
       </Table.Footer>
     </Table>
   );
