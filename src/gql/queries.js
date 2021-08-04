@@ -1,5 +1,45 @@
 import { gql } from '@apollo/client';
 
+const dofFragment = gql`
+  fragment dofDetails on SingleDof {
+    id
+    owner{
+      name
+      consultantId
+    }
+    date {
+      year
+      month
+      week
+    }
+    usedItems {
+      itemName
+      price
+      numberOfItems
+      totalPrice
+    }
+    usedItemStars {
+      itemName
+      price
+      numberOfItems
+      totalPrice
+    }
+    totalPriceItems
+    totalPriceStars
+    discount
+    totalPrice
+  }
+`;
+
+const itemFragment = gql`
+  fragment itemDetails on Item {
+    id
+    name
+    stock 
+    price
+  }
+`;
+
 export const LOGIN = gql`
   mutation login($username: String! $password: String!) {
     login(
@@ -14,12 +54,10 @@ export const LOGIN = gql`
 export const GET_ALL_ITEMS = gql`
   query getAllItems {
     getAllItems {
-      name
-      id
-      stock
-      price
+      ...itemDetails
     }
   }
+  ${itemFragment}
 `;
 
 export const ADD_ITEM = gql`
@@ -30,12 +68,10 @@ export const ADD_ITEM = gql`
       price: $price
       orderDate: $date
     ){
-      id
-      name
-      stock
-      price
+      ...itemDetails
     }
   }
+  ${itemFragment}
 `;
 
 export const EDIT_ITEM = gql`
@@ -45,12 +81,10 @@ export const EDIT_ITEM = gql`
       newName: $newName
       newPrice: $newPrice
     ){
-      id
-      name
-      stock
-      price
+      ...itemDetails
     }
   }
+  ${itemFragment}
 `;
 
 export const DELETE_ITEM = gql`
@@ -89,12 +123,10 @@ export const ADD_ORDER = gql`
       orderDate: $date
       numberOfItems: $numberOfItems
     ){
-      id
-      name
-      stock
-      price
+      ...itemDetails
     }
   }
+  ${itemFragment}
 `;
 
 export const REDUCE_ORDER = gql`
@@ -103,12 +135,10 @@ export const REDUCE_ORDER = gql`
       itemId: $id
       numberOfItems: $numberOfItems
     ){
-      id
-      name
-      stock
-      price
+      ...itemDetails
     }
   }
+  ${itemFragment}
 `;
 
 export const GET_ALL_PERSONNEL = gql`
@@ -225,4 +255,67 @@ export const SET_STAR_PRICE = gql`
       price
     }
   }
+`;
+
+export const GET_DOFS = gql`
+  query getDofs($year: Int! $month: Int! $week: Int){
+    getMultipleDofs(
+      date: {
+        year: $year,
+        month: $month,
+        week: $week
+      }
+    ){
+      type
+      date {
+        year
+        month
+        week
+      }
+      data {
+        date {
+          year
+          month
+          week
+        }
+        dof {
+          ...dofDetails
+        }
+      }
+    }
+  }
+  ${dofFragment}
+`;
+
+export const GET_DOF = gql`
+  query getDof($id: ID!){
+    getDof(
+      id: $id
+    ){
+      ...dofDetails
+    }
+  }
+  ${dofFragment}
+`;
+
+export const SAVE_DOF = gql`
+  mutation saveDof($id: ID!, $owner: ID!, $date: DateInput!, $usedItems: [UsedItemInput!]!, $usedItemStars: [UsedItemInput!]!, $discount: Float!){
+    editDof(
+      id: $id,
+      owner: $owner,
+      date: $date,
+      usedItems: $usedItems,
+      usedItemStars: $usedItemStars,
+      discount: $discount
+    ){
+      dof {
+        ...dofDetails
+      }
+      changedItems {
+        ...itemDetails
+      }
+    }
+  }
+  ${dofFragment}
+  ${itemFragment}
 `;

@@ -11,7 +11,10 @@ import ItemsPage from './components/ItemsPage';
 import ItemsStarPage from './components/ItemsStarPage';
 import NavBar from './components/NavBar';
 import PersonnelPage from './components/PersonnelPage';
+import DofView from './components/DofView';
+import DofSearch from './components/DofSearch';
 import { SET_TOKEN } from './reducers/tokenReducers';
+import SingleDof from './components/SingleDof';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -41,16 +44,26 @@ const App = () => {
     <div>
       <NavBar />
       <Switch>
-        <Route path='/items'>
+        <Route path='/items' exact>
           <ItemsPage />
         </Route>
-        <Route path='/itemsStar'>
+        <Route path='/itemsStar' exact>
           <ItemsStarPage />
         </Route>
-        <Route path='/personnel'>
+        <Route path='/personnel' exact>
           <PersonnelPage />
         </Route>
-        <Route path='/login'>
+        <Route path='/dofs' exact>
+          <DofSearch />
+        </Route>
+        <Route path='/dofs/:date' exact>
+          <DofSearch />
+          <DofView />
+        </Route>
+        <Route path='/dofs/:date/:weekIndex/:id' exact>
+          <SingleDof />
+        </Route>
+        <Route path='/login' exact>
           <Login />
         </Route>
         <Route path='/'>

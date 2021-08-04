@@ -5,7 +5,7 @@ import useMonthToWeek from '../hooks/useMonthToWeek';
 import monthObject from '../lib/monthObject';
 import forceInputToNumber from '../lib/forceInputToNumber';
 
-const DateInput = ({ date, setDate }) => {
+const DateInput = ({ date, setDate, clearableWeek }) => {
   const [weekValue, setMonthToParse] = useMonthToWeek();
 
   const handleChangeYear = ({ target }) => {
@@ -54,6 +54,7 @@ const DateInput = ({ date, setDate }) => {
           label='Week'
           placeholder='Week'
           search
+          clearable={false || clearableWeek}
           selection
           options={weekValue}
           onChange={handleChangeWeek}

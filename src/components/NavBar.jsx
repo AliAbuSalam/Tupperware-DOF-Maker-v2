@@ -50,7 +50,7 @@ const NavBar = () => {
       <Menu.Item
         name='personnel'
         as={Link}
-        to='personnel'
+        to='/personnel'
         active={activePage === 'personnel'}
       >
         Personnel
