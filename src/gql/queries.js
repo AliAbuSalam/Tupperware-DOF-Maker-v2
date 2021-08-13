@@ -319,3 +319,18 @@ export const SAVE_DOF = gql`
   ${dofFragment}
   ${itemFragment}
 `;
+
+export const DELETE_DOF = gql`
+  mutation deleteDof($id: ID!){
+    deleteDof(id: $id){
+      dof {
+        ...dofDetails
+      }
+      changedItems {
+        ...itemDetails
+      }
+    }
+  }
+  ${dofFragment}
+  ${itemFragment}
+`;

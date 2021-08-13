@@ -26,7 +26,7 @@ const NavBar = () => {
       <Menu.Item
         name='items'
         as={Link}
-        to='/items'
+        to='/items/'
         active={activePage === 'items'}
       >
         Items
@@ -34,7 +34,7 @@ const NavBar = () => {
       <Menu.Item
         name='itemsStar'
         as={Link}
-        to='/itemsStar'
+        to='/itemsStar/'
         active={activePage === 'itemsStar'}
       >
         Star-Items
@@ -42,7 +42,7 @@ const NavBar = () => {
       <Menu.Item
         name='dofs'
         as={Link}
-        to='/dofs'
+        to='/dofs/'
         active={activePage === 'dofs'}
       >
         Dofs
@@ -50,7 +50,7 @@ const NavBar = () => {
       <Menu.Item
         name='personnel'
         as={Link}
-        to='/personnel'
+        to='/personnel/'
         active={activePage === 'personnel'}
       >
         Personnel

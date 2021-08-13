@@ -51,6 +51,15 @@ const dofEditReducers = (state = initialState, action) => {
       return deleteUsedStarItemFunction(state, action.data);
     case 'REMOVE_DOF_EDIT':
       return null;
+    case 'EDIT_DISCOUNT':
+      if(isNaN(action.data) ||action.data > 1 || action.data < 0){
+        return state;
+      }
+      return {
+        ...state,
+        discount: action.data,
+        totalPrice: (state.totalPriceItems + state.totalPriceStars) * (1 - action.data)
+      };
     case 'RESET_EDIT_FLAG':
       return {
         ...state,
@@ -117,6 +126,13 @@ export const DELETE_USED_STAR_ITEM_DOF_EDIT = (data) => {
     data
   }
 };
+
+export const EDIT_DISCOUNT_DOF_EDIT = (data) => {
+  return {
+    type: 'EDIT_DISCOUNT',
+    data
+  }
+}
 
 export const RESET_EDIT_FLAG = () => {
   return {

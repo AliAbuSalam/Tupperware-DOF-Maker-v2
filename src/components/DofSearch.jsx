@@ -41,9 +41,9 @@ const DofSearch = () => {
         date: data.getMultipleDofs.date
       }));
       if(!activeDate.week){
-        history.push(`/dofs/${activeDate.year}-${activeDate.month}`);
+        history.push(`/dofs/${activeDate.year}-${activeDate.month}/`);
       } else {
-        history.push(`/dofs/${activeDate.year}-${activeDate.month}-${activeDate.week}`)
+        history.push(`/dofs/${activeDate.year}-${activeDate.month}-${activeDate.week}/`)
       }
     }
   }, [data, loading, dispatch, history]);

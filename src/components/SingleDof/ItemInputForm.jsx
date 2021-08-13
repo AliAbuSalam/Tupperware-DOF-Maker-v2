@@ -19,6 +19,9 @@ const styles = {
     textAlign: 'right',
     marginTop: '0.5rem'
   },
+  container: {
+    marginBottom: '2rem'
+  }
 }
 
 const ItemInputForm = ({ items, reducerFunction }) => {
@@ -52,7 +55,7 @@ const ItemInputForm = ({ items, reducerFunction }) => {
   };
 
   return(
-    <div>
+    <div style={styles.container}>
       <div style={styles.tableContainer}>
         <Table>
           <Table.Header>

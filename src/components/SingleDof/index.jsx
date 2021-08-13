@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { Grid, Ref, Segment, Header, Loader, Button } from 'semantic-ui-react';
+import { Grid, Ref, Segment, Header, Loader, Button, Sticky, Form } from 'semantic-ui-react';
 import { useParams } from 'react-router';
 import { useLazyQuery, useMutation } from '@apollo/client';
 import { useDispatch } from 'react-redux';
@@ -21,10 +21,14 @@ import { SET_PEOPLE } from '../../reducers/personReducers';
 import { RESET_EDIT_FLAG } from '../../reducers/dofEditReducers';
 import { SAVE_DOF } from '../../gql/queries';
 import useStarItems from '../../hooks/useStarItems';
+import AvailableItems from './AvailableItems';
+import parseToRp from '../../lib/parseToRp';
+import DiscountInput from '../DofPage/DiscountInput';
+import DeleteDof from './DeleteDof';
 
 const SingleDof = () => {
   const { id: dofId, weekIndex } = useParams();
-  const dofFromGlobalState = useSelector(state => state.dofs.dofs[weekIndex]?.dof.find(dof => dof.id === dofId));
+  const dofFromGlobalState = useSelector(state => state.dofs.dofs[weekIndex]?.dof?.find(dof => dof.id === dofId));
   const items = useSelector(state => state.items);
   const itemsStar = useSelector(state => state.itemsStar);
   const personnel = useSelector(state => state.people);
@@ -137,21 +141,35 @@ const SingleDof = () => {
         <Header as='h4'>{dof?.date.year} {monthValueToText(dof?.date.month)} week {dof?.date.week}</Header>
       </div>
 
-      <Button style={styles.saveButton} disabled={!editFlag} onClick={handleSave}>Save</Button>
-      
+      <div>
+        <Button style={styles.saveButton} disabled={!editFlag} onClick={handleSave} size='big' color={editFlag ? 'green': 'grey'}>Save</Button>
+        <DeleteDof dof={dof} style={styles.deleteButton} weekIndex={weekIndex}/>
+      </div>
+
       <Grid columns='2'>
+        <Grid.Row stretched>
+          <Grid.Column>
+            <Ref innerRef={refObject}>
+              <Segment>
+                <Sticky context={refObject}>
+                  <Header as='h3'>Total: {parseToRp(dof?.totalPrice)}</Header>
+                  <DiscountInput/>
+                  <Header as='h3'>Items</Header>
+                  {dof ? <TableOfItems items={dof.usedItems} totalPrice={dof.totalPriceItems} pageType='singleDof'/>: <></>}
+                  {items ? <ItemInputForm items={items.filter(item => !listOfItemsInDof?.includes(item.name))} reducerFunction={ADD_USED_ITEM_DOF_EDIT}/>: <Segment placeholder><Loader active/></Segment>}
+                  <Header as='h3'>Star Items</Header>
+                  {dof ? <TableOfItems items={dof.usedItemStars} totalPrice={dof.totalPriceStars} pageType='singleDof' itemType='STAR_ITEM'/>: <></>}
+                  {itemsStar ? <ItemInputForm items={itemsStar.itemsList.filter(item => !listOfStarsInDof?.includes(item.name))} reducerFunction={ADD_USED_STAR_ITEM_DOF_EDIT}/>:<Segment placeholder><Loader active/></Segment>}
+                </Sticky>
+              </Segment>
+            </Ref>
+          </Grid.Column>
         <Grid.Column>
-          <Ref innerRef={refObject}>
-            <Segment>
-              <Header as='h3'>Items</Header>
-              {dof ? <TableOfItems items={dof.usedItems} totalPrice={dof.totalPriceItems} pageType='singleDof'/>: <></>}
-              {items ? <ItemInputForm items={items.filter(item => !listOfItemsInDof?.includes(item.name))} reducerFunction={ADD_USED_ITEM_DOF_EDIT}/>: <Segment placeholder><Loader active/></Segment>}
-              <Header as='h3'>Star Items</Header>
-              {dof ? <TableOfItems items={dof.usedItemStars} totalPrice={dof.totalPriceStars} pageType='singleDof' itemType='STAR_ITEM'/>: <></>}
-              {itemsStar ? <ItemInputForm items={itemsStar.itemsList.filter(item => !listOfStarsInDof?.includes(item.name))} reducerFunction={ADD_USED_STAR_ITEM_DOF_EDIT}/>:<Segment placeholder><Loader active/></Segment>}
-            </Segment>
-          </Ref>
+          <Segment>
+            <AvailableItems items={items}/>
+          </Segment>
         </Grid.Column>
+        </Grid.Row>
       </Grid>
     </div>
   );
@@ -160,6 +178,11 @@ const SingleDof = () => {
 const styles = {
   saveButton: {
     margin: '1rem'
+  },
+  deleteButton: {
+    float: 'right',
+    marginTop: '1.6rem',
+    marginRight: '1rem'
   }
 }
 
