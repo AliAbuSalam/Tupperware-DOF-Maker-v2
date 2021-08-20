@@ -334,3 +334,30 @@ export const DELETE_DOF = gql`
   ${dofFragment}
   ${itemFragment}
 `;
+
+export const CREATE_DOF = gql`
+  mutation createDof(
+    $owner: ID!
+    $date: DateInput!
+    $usedItems: [UsedItemInput!]!
+    $usedItemStars: [UsedItemInput!]!
+    $discount: Float
+  ){
+    createDof(
+      owner: $owner
+      date: $date
+      usedItems: $usedItems
+      usedItemStars: $usedItemStars
+      discount: $discount
+    ){
+      dof {
+        ...dofDetails
+      }
+      changedItems {
+        ...itemDetails
+      }
+    }
+  }
+  ${dofFragment}
+  ${itemFragment}
+`;
