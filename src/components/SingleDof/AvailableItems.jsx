@@ -1,9 +1,11 @@
 import React from 'react';
 import { Table } from 'semantic-ui-react';
+import { useSelector } from 'react-redux';
 
 import parseToRp from '../../lib/parseToRp';
 
-const AvailableItems = ({ items }) => {
+const AvailableItems = () => {
+  const items = useSelector(state => state.items);
   return(
     <Table>
       <Table.Header>
