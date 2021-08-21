@@ -182,7 +182,7 @@ const styles = {
   deleteButton: {
     float: 'right',
     marginTop: '1.6rem',
-    marginRight: '1rem'
+    marginRight: '1rem',
   }
 }
 

@@ -43,7 +43,7 @@ const DeleteItemStar = ({ activeItem, setActiveItem, open, setOpen }) => {
       <Modal.Actions>
         <Button
           circular
-          icon='delete'
+          icon='trash alternate outline'
           color='red'
           loading={loading}
           onClick={handleDelete}

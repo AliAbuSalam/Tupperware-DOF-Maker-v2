@@ -91,12 +91,8 @@ const AddItem = (props) => {
       </Modal.Content>
       <ErrorMessage message={error?.message}/>
       <Modal.Actions>
-        <Button onClick={() => setOpen(false)}>
-          Cancel
-        </Button>
-        <Button onClick={handleSubmit} disabled={!itemName || !itemPrice || !dateValidity} loading={loading}>
-          Add
-        </Button>
+        {/* <Button onClick={() => setOpen(false)} circular icon='cancel'/> */}
+        <Button onClick={handleSubmit} disabled={!itemName || !itemPrice || !dateValidity} loading={loading} circular icon='add' color='green'/>
       </Modal.Actions>
     </Modal>
   );

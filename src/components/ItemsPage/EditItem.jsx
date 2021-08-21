@@ -87,12 +87,7 @@ const EditItem = ({ open, setOpen, item }) => {
         <ErrorMessage message={errorMessage}/>
       </Modal.Content>
       <Modal.Actions>
-        <Button onClick={handleClose}>
-          Cancel
-        </Button>
-        <Button color='yellow' form='edit-item' type='submit' loading={loading}>
-          Edit item
-        </Button>
+        <Button color='yellow' form='edit-item' type='submit' loading={loading} circular icon='edit'/>
       </Modal.Actions>
     </Modal>
 

@@ -44,12 +44,11 @@ const DeleteItem = ({ open, setOpen, item}) => {
       </Modal.Content>
       <ErrorMessage message={errorMessage}/>
       <Modal.Actions>
-        <Button onClick={handleClose}>Cancel</Button>
         <Button loading={loading} color='red'
           onClick={handleClick}
-        >
-          Delete
-        </Button>
+          circular
+          icon='trash alternate outline'
+        />
       </Modal.Actions>
     </Modal>
   );

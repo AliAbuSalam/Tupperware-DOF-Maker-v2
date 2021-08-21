@@ -37,7 +37,7 @@ const DeleteDof = ({ dof, style, weekIndex }) => {
     <Modal
       open={open}
       onClose={handleClose}
-      trigger={<Button style={style} onClick={() => setOpen(true)}>Delete</Button>}
+      trigger={<Button style={style} color='red' onClick={() => setOpen(true)}>Delete</Button>}
     >
       <Modal.Header>Delete Dof</Modal.Header>
       <Modal.Content>
