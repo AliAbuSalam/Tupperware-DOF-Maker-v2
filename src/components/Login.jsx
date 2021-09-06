@@ -28,7 +28,7 @@ const Login = () => {
         username,
         password
       }
-    }).catch(e => console.log('error: ', e.message));
+    }).catch(e => console.log('error: ', e));
   };
 
   return(
