@@ -4,7 +4,6 @@ import { Button } from 'semantic-ui-react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useMutation } from '@apollo/client';
 
-import positionObjects from '../../lib/positionObject';
 import ErrorMessage from '../ErrorMessage';
 import { CREATE_PERSON } from '../../gql/queries';
 import { ADD_PERSON } from '../../reducers/personReducers';
