@@ -10,7 +10,7 @@ import monthValueToText from  '../../lib/monthValueToText';
 import TableOfItems from '../DofPage/TableOfItems';
 import ItemInputForm from './ItemInputForm';
 import { GET_ALL_ITEMS } from '../../gql/queries';
-import { SET_ITEMS } from '../../reducers/itemReducers';
+import { SET_ITEMS, UPDATE_ITEMS } from '../../reducers/itemReducers';
 import { SET_ITEMS_STAR } from '../../reducers/itemStarReducers';
 import { SET_STAR_PRICE } from '../../reducers/itemStarReducers';
 import { GET_ALL_PERSONNEL } from '../../gql/queries';
@@ -67,6 +67,7 @@ const SingleDof = () => {
       }
     }).then(result => {
       dispatch(SET_DOF_TO_EDIT(result.data.editDof.dof));
+      dispatch(UPDATE_ITEMS(result.data.editDof.changedItems));
       dispatch(RESET_EDIT_FLAG());
     }).catch(error => console.error('error: ', error))
   };

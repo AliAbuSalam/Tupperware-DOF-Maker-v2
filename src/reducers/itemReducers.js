@@ -8,6 +8,14 @@ const itemReducers = (state = initialState, action ) => {
       return state.concat(action.data);
     case 'REMOVE_ITEM':
       return state.filter(item => item.id !== action.data);
+    case 'UPDATE_ITEMS':
+      const idArray = action.data.map(item => item.id);
+      return state.map(item => {
+        if(!idArray.includes(item.id)){
+          return item;
+        }
+        return action.data.find(updatedItem => updatedItem.id === item.id);
+      })
     default:
       return state;
   }
@@ -31,6 +39,13 @@ export const REMOVE_ITEM = (id) => {
   return {
     type: 'REMOVE_ITEM',
     data: id
+  }
+}
+
+export const UPDATE_ITEMS = (arrayOfItems) => {
+  return {
+    type: 'UPDATE_ITEMS',
+    data: arrayOfItems
   }
 }
 
