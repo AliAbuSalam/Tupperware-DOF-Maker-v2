@@ -15,7 +15,7 @@ const itemReducers = (state = initialState, action ) => {
           return item;
         }
         return action.data.find(updatedItem => updatedItem.id === item.id);
-      })
+      });
     default:
       return state;
   }
