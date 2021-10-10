@@ -12,7 +12,7 @@ const styles = {
   }
 }
 
-const DofCard = ({ dof, color, weekIndex }) => {
+const DofCard = ({ dof, color, weekIndex, week, dofNumber }) => {
   const { date } = useParams();
   const history = useHistory();
 
@@ -20,7 +20,7 @@ const DofCard = ({ dof, color, weekIndex }) => {
     <Link to={location => `${location.pathname}${weekIndex}/${dof.id}`}>
       <Card fluid color={color}>
         <Card.Content>
-          <Card.Header>{dof.owner.name}</Card.Header>
+          <Card.Header>{`${week}-${dofNumber}`}<br/>{dof.owner.name}</Card.Header>
           <Card.Meta>{dof.owner.consultantId}</Card.Meta>
           <Card.Description>
             <Header as='h5'>Item</Header>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Grid, Button, Header } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
@@ -45,10 +45,7 @@ const DofView = () => {
   }, []);
 
   useEffect(() => {
-    console.log('data: ', data);
-    console.log('loading: ', loading);
     if(data && !loading){
-      console.log('test');
       console.log({
         data
       });
@@ -58,6 +55,10 @@ const DofView = () => {
       }));
     }
   }, [data, loading, dispatch]);
+
+  useEffect(() => {
+    console.log('dofsInView: ', dofsInView);
+  }, [dofsInView]);
 
   return(
     <div>
@@ -75,10 +76,10 @@ const DofView = () => {
       }
       <ActionButtons dofs={dofsInView}/>
       <Grid columns={2}>
-        {dofsInView.dof?.length > 0 ? dofsInView.dof.map(dof => {
+        {dofsInView.dof?.length > 0 ? dofsInView.dof.map((dof, index) => {
           return(
             <Grid.Column key={dof.id}>
-              <DofCard dof={dof} color='green' weekIndex={weekIndex}/>
+              <DofCard dof={dof} color='green' weekIndex={weekIndex} week={dofsInView.date.week} dofNumber={index + 1}/>
             </Grid.Column>
           );
         }) : <></>}
