@@ -25,7 +25,6 @@ import AvailableItems from './AvailableItems';
 import parseToRp from '../../lib/parseToRp';
 import DiscountInput from '../DofPage/DiscountInput';
 import DeleteDof from './DeleteDof';
-import clipboardButtons from './ClipboardButtons';
 import ClipboardButtons from './ClipboardButtons';
 
 const SingleDof = () => {
