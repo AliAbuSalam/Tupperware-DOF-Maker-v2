@@ -58,8 +58,11 @@ const dofEditReducers = (state = initialState, action) => {
       return {
         ...state,
         discount: action.data,
-        totalPrice: (state.totalPriceItems + state.totalPriceStars) * (1 - action.data)
+        totalPrice: (state.totalPriceItems + state.totalPriceStars) * (1 - action.data),
+        isDofEdited: true
       };
+    case 'PASTE_FROM_CLIPBOARD':
+      return pasteFromClipboard(state, action.data);
     case 'RESET_EDIT_FLAG':
       return {
         ...state,
@@ -140,6 +143,12 @@ export const RESET_EDIT_FLAG = () => {
   }
 }
 
+export const PASTE_CLIPBOARD = (data) => {
+  return {
+    type: 'PASTE_FROM_CLIPBOARD',
+    data
+  }
+};
 
 const deleteUsedItemFunction = (state, data) => {
   const newUsedItems = state.usedItems.filter(item => item.itemName !== data.itemName);
@@ -174,6 +183,19 @@ const mapArrayWithEditedItem = (item, editedItem) =>  {
     return item;
   }
   return editedItem;
+};
+
+const pasteFromClipboard = (state, itemFromClipboard) => {
+  return {
+    ...state,
+    usedItems: itemFromClipboard.usedItems,
+    usedItemStars: itemFromClipboard.usedItemStars,
+    totalPriceItems: itemFromClipboard.totalPriceItems,
+    totalPriceStars: itemFromClipboard.totalPriceStars,
+    totalPrice: itemFromClipboard.totalPrice,
+    discount: itemFromClipboard.discount,
+    isDofEdited: true
+  }
 };
 
 export default dofEditReducers;

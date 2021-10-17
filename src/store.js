@@ -6,6 +6,7 @@ import personReducers from './reducers/personReducers';
 import dofEditReducers from './reducers/dofEditReducers';
 import dofReducers from './reducers/dofReducers';
 import itemStarReducers from './reducers/itemStarReducers';
+import clipboardReducers from './reducers/clipboardReducers';
 
 const reducer = combineReducers({
   token: tokenReducer,
@@ -14,7 +15,8 @@ const reducer = combineReducers({
   people: personReducers,
   dofs: dofReducers,
   dofEdit: dofEditReducers,
-  itemsStar: itemStarReducers
+  itemsStar: itemStarReducers,
+  clipboard: clipboardReducers
 });
 
 const store = createStore(reducer);

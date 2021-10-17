@@ -25,6 +25,8 @@ import AvailableItems from './AvailableItems';
 import parseToRp from '../../lib/parseToRp';
 import DiscountInput from '../DofPage/DiscountInput';
 import DeleteDof from './DeleteDof';
+import clipboardButtons from './ClipboardButtons';
+import ClipboardButtons from './ClipboardButtons';
 
 const SingleDof = () => {
   const { id: dofId, weekIndex } = useParams();
@@ -144,6 +146,7 @@ const SingleDof = () => {
 
       <div>
         <Button style={styles.saveButton} disabled={!editFlag} onClick={handleSave} size='big' color={editFlag ? 'green': 'grey'}>Save</Button>
+        <ClipboardButtons style={styles.clipboardButtons} dof={dof}/>
         <DeleteDof dof={dof} style={styles.deleteButton} weekIndex={weekIndex}/>
       </div>
 
@@ -184,6 +187,9 @@ const styles = {
     float: 'right',
     marginTop: '1.6rem',
     marginRight: '1rem',
+  },
+  clipboardButtons: {
+    marginLeft: '2rem'
   }
 }
 
