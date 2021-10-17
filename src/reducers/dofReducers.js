@@ -40,6 +40,8 @@ const dofReducers = (state = initialState, action) => {
       };
     case "ADD_DOF": 
       return handleAddDof(state, action.data);
+    case 'UPDATE_DOF':
+      return handleUpdateDof(state, action.data);
     default:
       return state;
   }
@@ -70,8 +72,14 @@ export const ADD_DOF = (data) => {
   }
 };
 
+export const UPDATE_DOF = (data) => {
+  return {
+    type: 'UPDATE_DOF',
+    data
+  }
+};
+
 const handleAddDof = (state, data) => {
-  console.log('state before change: ', state);
   const dofDate = data.date;
   let indexLocation;
   const correspondingWeeklyDof = state.dofs.find((weeklyDof, index) => {
@@ -91,7 +99,6 @@ const handleAddDof = (state, data) => {
     id: data.id,
     weekIndex: indexLocation
   }
-  console.log('correspondingWeeklyDof: ', correspondingWeeklyDof);
   const newWeeklyDofObject = {
     date: correspondingWeeklyDof.date,
     dof: correspondingWeeklyDof.dof.concat(data)
@@ -102,12 +109,27 @@ const handleAddDof = (state, data) => {
     }
     return dofObject;
   })
-  console.log('state after change: ', newDofState);
-  console.log('state: ', state);
   return { 
     ...state, 
     dofs: newDofState, 
     newlyAddedDofLocation: state.newlyAddedDofLocation.concat(dofLocation)};
 }
+
+const handleUpdateDof = (state, data) => {
+  if(state.dofs.length === 0){
+    return state;
+  }
+  const weekIndex = data.weekIndex;
+  const newWeeklyDofArray = state.dofs[weekIndex].dof.map(dof => dof.id === data.dof.id ? data.dof : dof);
+  const newWeeklyDofObject = {
+    ...state.dofs[weekIndex],
+    dof: newWeeklyDofArray
+  };
+  const newState = {
+    ...state,
+    dofs: state.dofs.map((dofObject, index) => index === parseInt(weekIndex) ? newWeeklyDofObject: dofObject)
+  };
+  return newState;
+};
 
 export default dofReducers;

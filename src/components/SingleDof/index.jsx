@@ -20,6 +20,7 @@ import { ADD_USED_STAR_ITEM_DOF_EDIT } from '../../reducers/dofEditReducers';
 import { SET_PEOPLE } from '../../reducers/personReducers';
 import { RESET_EDIT_FLAG } from '../../reducers/dofEditReducers';
 import { SAVE_DOF } from '../../gql/queries';
+import { UPDATE_DOF } from '../../reducers/dofReducers';
 import useStarItems from '../../hooks/useStarItems';
 import AvailableItems from './AvailableItems';
 import parseToRp from '../../lib/parseToRp';
@@ -69,6 +70,10 @@ const SingleDof = () => {
     }).then(result => {
       dispatch(SET_DOF_TO_EDIT(result.data.editDof.dof));
       dispatch(UPDATE_ITEMS(result.data.editDof.changedItems));
+      dispatch(UPDATE_DOF({
+        dof: result.data.editDof.dof,
+        weekIndex
+      }))
       dispatch(RESET_EDIT_FLAG());
     }).catch(error => console.error('error: ', error))
   };
