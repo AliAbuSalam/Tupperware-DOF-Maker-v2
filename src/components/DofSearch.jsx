@@ -48,13 +48,19 @@ const DofSearch = () => {
     }
   }, [data, loading, dispatch, history]);
 
+  useEffect(() => {
+    if(error){
+      console.log('error: ', error);
+    }
+  })
+
   return(
     <div>
       <Segment style={{ marginLeft: 'auto', marginRight: 'auto', maxWidth: '650px' }}>
         <Form>
           <DateInput date={activeDate} setDate={setActiveDate} clearableWeek={true}/>
           <div style={{ textAlign: 'center'}}>
-            <Button onClick={handleGetDofs}>Search</Button>
+            <Button onClick={handleGetDofs} loading={loading}>Search</Button>
           </div>
         </Form>
       </Segment>
