@@ -105,12 +105,15 @@ const ItemsPage = () => {
                 
             </Table.HeaderCell>
             <Table.HeaderCell>
-              price
+              Price
               <NumberFilters setFilter={setPriceFilter}/>
             </Table.HeaderCell>
             <Table.HeaderCell>
               Stock
               <NumberFilters setFilter={setStockFilter} />
+            </Table.HeaderCell>
+            <Table.HeaderCell>
+              Price * Stock
             </Table.HeaderCell>
           </Table.Row>
         </Table.Header>
@@ -144,12 +147,30 @@ const ItemsPage = () => {
                   onClick={() => handleStockChange(item, 'REDUCE')}
                 />
               </Table.Cell>
+              <Table.Cell>{item.stock > 0 ? parseToRp(item.price * item.stock) : '-'}</Table.Cell>
             </Table.Row>
           )}
         </Table.Body>
+        <Table.Footer>
+          <Table.Row>
+            <Table.HeaderCell colSpan='2'><b>Total of filtered items</b></Table.HeaderCell>
+            <Table.HeaderCell colSpan='2'/>
+            <Table.HeaderCell><b>{parseToRp(filteredItems.reduce(calculatePriceTimesStock, 0))}</b></Table.HeaderCell>
+          </Table.Row>
+          <Table.HeaderCell colSpan='2'><b>Total</b></Table.HeaderCell>
+          <Table.HeaderCell colSpan='2'/>
+          <Table.HeaderCell><b>{parseToRp(itemsList.reduce(calculatePriceTimesStock, 0))}</b></Table.HeaderCell>
+        </Table.Footer>
       </CustomTable>
     </div>
   );
 };
+
+const calculatePriceTimesStock = (sum, currentItem) => {
+  if(currentItem.stock <= 0){
+    return sum;
+  }
+  return sum + (currentItem.price * currentItem.stock);
+}
 
 export default ItemsPage;
