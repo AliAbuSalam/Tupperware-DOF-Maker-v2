@@ -17,11 +17,10 @@ const dofEditReducers = (state = initialState, action) => {
         ...state,
         usedItemStars: state.usedItemStars.concat(action.data),
         totalPriceStars: state.totalPriceStars + action.data.totalPrice,
-        totalPrice: state.totalPrice + (action.data.totalPrice * (1 - state.discount)),
+        totalPrice: state.totalPrice + action.data.totalPrice,
         isDofEdited: true
       };
     case 'EDIT_USED_ITEM':
-      console.log('edit used item');
       const newState = {
         ...state,
         usedItems: state.usedItems.map(item => mapArrayWithEditedItem(item, action.data)),
@@ -30,7 +29,7 @@ const dofEditReducers = (state = initialState, action) => {
       return {
         ...newState,
         totalPriceItems: newTotalPriceItems,
-        totalPrice: (newTotalPriceItems + newState.totalPriceStars) * (1 - newState.discount),
+        totalPrice: (newTotalPriceItems * (1 - newState.discount))+ newState.totalPriceStars,
         isDofEdited: true
       };
     case 'EDIT_USED_STAR_ITEM':
@@ -42,7 +41,7 @@ const dofEditReducers = (state = initialState, action) => {
       return {
         ...newStateForStar,
         totalPriceStars: newTotalPriceStars,
-        totalPrice: (newTotalPriceStars + newStateForStar.totalPriceItems) * (1 - newStateForStar.discount),
+        totalPrice: (newStateForStar.totalPriceItems*(1 - newStateForStar.discount)) + newTotalPriceStars,
         isDofEdited: true
       };
     case 'DELETE_USED_ITEM':
@@ -58,7 +57,7 @@ const dofEditReducers = (state = initialState, action) => {
       return {
         ...state,
         discount: action.data,
-        totalPrice: (state.totalPriceItems + state.totalPriceStars) * (1 - action.data),
+        totalPrice: (state.totalPriceItems * (1 - action.data)) + state.totalPriceStars,
         isDofEdited: true
       };
     case 'PASTE_FROM_CLIPBOARD':
@@ -157,7 +156,7 @@ const deleteUsedItemFunction = (state, data) => {
     ...state,
     usedItems: newUsedItems,
     totalPriceItems: newTotalPriceItems,
-    totalPrice: (newTotalPriceItems + state.totalPriceStars) * (1 - state.discount),
+    totalPrice: (newTotalPriceItems * (1 - state.discount)) + state.totalPriceStars,
     isDofEdited: true
   }
 }
@@ -169,7 +168,7 @@ const deleteUsedStarItemFunction = (state, data) => {
     ...state,
     usedItemStars: newUsedStarItems,
     totalPriceStars: newTotalPriceStarItems,
-    totalPrice: (state.totalPriceItems + newTotalPriceStarItems) * (1 - state.discount),
+    totalPrice: (state.totalPriceItems*(1 - state.discount)) + newTotalPriceStarItems,
     isDofEdited: true
   };
 };
