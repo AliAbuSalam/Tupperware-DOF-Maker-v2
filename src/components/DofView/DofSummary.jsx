@@ -35,7 +35,7 @@ const DofSummary = ({ open, setOpen }) => {
       onClose={() => setOpen(false)}
       trigger={<Button>Dof Summaries</Button>}
     >
-      <Modal.Header>{dofIndexToShow !== null && dofIndexToShow >= 0 ? <>Summary of Week {dofs[dofIndexToShow].date.week}</>: <>Summary of {monthValueToText(dofs[0].date.month)}</>}</Modal.Header>
+      <Modal.Header>{dofs.length > 0 && dofIndexToShow !== null && dofIndexToShow >= 0 ? <>Summary of Week {dofs[dofIndexToShow].date.week}</>: <>Summary of {monthValueToText(dofs[0].date.month)}</>}</Modal.Header>
       <Modal.Content>
         <SummaryTable dofArray={dofsItemToShow(dofIndexToShow)}/>
       </Modal.Content>
