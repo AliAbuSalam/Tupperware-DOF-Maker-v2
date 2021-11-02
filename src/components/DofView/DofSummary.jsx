@@ -35,13 +35,13 @@ const DofSummary = ({ open, setOpen }) => {
       onClose={() => setOpen(false)}
       trigger={<Button>Dof Summaries</Button>}
     >
-      <Modal.Header>{dofs.length > 0 && dofIndexToShow !== null && dofIndexToShow >= 0 ? <>Summary of Week {dofs[dofIndexToShow].date.week}</>: <>Summary of {monthValueToText(dofs[0].date.month)}</>}</Modal.Header>
+      <Modal.Header>{dofs.length > 0 && dofIndexToShow !== null && dofIndexToShow >= 0 ? <>Summary of Week {dofs[dofIndexToShow]?.date?.week}</>: <>Summary of {monthValueToText(dofs[0]?.date?.month)}</>}</Modal.Header>
       <Modal.Content>
         <SummaryTable dofArray={dofsItemToShow(dofIndexToShow)}/>
       </Modal.Content>
       <Modal.Actions>
-        {dofs.length > 1 ? <Button circular onClick={handleMonthClick}>{monthValueToText(dofs[0].date.month)}</Button>: <></> }
-        {dofs ? dofs.map((weekObject, index) => <Button circular onClick={() => handleWeekClick(index)} key={index}>{weekObject.date.week}</Button>) : <></>}
+        {dofs.length > 1 ? <Button circular onClick={handleMonthClick}>{monthValueToText(dofs[0]?.date?.month)}</Button>: <></> }
+        {dofs ? dofs.map((weekObject, index) => <Button circular onClick={() => handleWeekClick(index)} key={index}>{weekObject?.date?.week}</Button>) : <></>}
       </Modal.Actions>
     </Modal>
   );
