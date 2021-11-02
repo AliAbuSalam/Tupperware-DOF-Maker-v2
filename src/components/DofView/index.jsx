@@ -9,6 +9,7 @@ import { GET_DOFS } from '../../gql/queries';
 import { SET_DOFS } from '../../reducers/dofReducers';
 import monthValueToText from '../../lib/monthValueToText';
 import ActionButtons from './ActionButtons';
+import DofSummary from './DofSummary';
 
 const DofView = () => {
   const { date: dateUrl } = useParams();
@@ -16,6 +17,7 @@ const DofView = () => {
   const dofs = useSelector(state => state.dofs.dofs);
   const [dofsInView, setDofsInView] = useState([]);
   const [getDofs, { loading, data, error }] = useLazyQuery(GET_DOFS);
+  const [openSummary, setOpenSummary] = useState(false);
   const [weekIndex, setWeekIndex] = useState(0);
   const dispatch = useDispatch();
 
@@ -56,16 +58,17 @@ const DofView = () => {
     }
   }, [data, loading, dispatch]);
 
-  useEffect(() => {
-    console.log('dofsInView: ', dofsInView);
-  }, [dofsInView]);
-
   return(
     <div>
       <div style={{ textAlign: 'center', marginTop: '1rem', marginBottom: '1rem' }}> 
         {dofs.length >= 4
           ? dofs.map((weeklyDof, i) => <Button key={weeklyDof.date.week} onClick={() => changeDofsToShow(i)}>Week {weeklyDof.date.week}</Button>)
           : <></>
+        }
+        {
+          dofs.length > 0 
+            ? <div style={{ marginTop: '1rem'}}><DofSummary open={openSummary} setOpen={setOpenSummary}/></div>
+            : <></>
         }
       </div>
       {
