@@ -17,6 +17,11 @@ const DofSummary = ({ open, setOpen }) => {
     setDofIndexToShow(null);
   }
 
+  const handleClose = () => {
+    setDofIndexToShow(0);
+    setOpen(false);
+  };
+
   const dofsItemToShow = (index) => {
     if(index === null){
       let dofsInAMonth = [];
@@ -25,14 +30,14 @@ const DofSummary = ({ open, setOpen }) => {
       });
       return dofsInAMonth;
     }
-    return dofs[index].dof;
+    return Array.isArray(dofs) ? dofs[index]?.dof : [];
   };
 
   return(
     <Modal 
       open={open}
       onOpen={() => setOpen(true)}
-      onClose={() => setOpen(false)}
+      onClose={handleClose}
       trigger={<Button>Dof Summaries</Button>}
     >
       <Modal.Header>{dofs.length > 0 && dofIndexToShow !== null && dofIndexToShow >= 0 ? <>Summary of Week {dofs[dofIndexToShow]?.date?.week}</>: <>Summary of {monthValueToText(dofs[0]?.date?.month)}</>}</Modal.Header>
