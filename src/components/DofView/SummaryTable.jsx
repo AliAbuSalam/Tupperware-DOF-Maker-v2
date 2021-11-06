@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Table } from 'semantic-ui-react';
+import { Table, Input } from 'semantic-ui-react';
 
 import parseToRp from '../../lib/parseToRp';
 
 const SummaryTable = ({ dofArray }) => {
   const [uniqueUsedItemsArray, setUniqueUsedItemsArray] = useState([]);
   const [uniqueUsedStarItemsArray, setUniqueUsedStarItemsArray] = useState([]);
+  const [usedItemsFilter, setUsedItemsFilter] = useState('');
+  const [usedStarItemsFilter, setUsedStarItemsFilter] = useState('');
 
   const createUniqueItemsArray = (itemsArray) => {
     let usedItems = [];
@@ -35,6 +37,13 @@ const SummaryTable = ({ dofArray }) => {
     });
     return uniqueUsedItems;
   }
+
+  const filterWith = (filter) => (item) => {
+    if(filter.trim() === ''){
+      return true;
+    }
+    return item.itemName.toLowerCase().trim().includes(filter.toLowerCase().trim());
+  };
 
   useEffect(() => {
     const usedItemsArray = dofArray.map(dof => dof.usedItems);
@@ -83,19 +92,21 @@ const SummaryTable = ({ dofArray }) => {
 
   return(
     <>
-      <h3>Items</h3>
+      <h3>Items</h3> 
+      <Input placeholder='Search...' icon='search' onChange={({ target }) => setUsedItemsFilter(target.value)}/>
       <Table>
         <TableHeader />
         <Table.Body>
-          {uniqueUsedItemsArray.map(mapItemsToTable)}
+          {uniqueUsedItemsArray.filter(filterWith(usedItemsFilter)).map(mapItemsToTable)}
         </Table.Body>
         <TableFooter itemsArray={uniqueUsedItemsArray}/>
       </Table>
       <h3>Star Items</h3>
+      <Input placeholder='Search...' icon='search' onChange={({ target }) => setUsedStarItemsFilter(target.value)}/>
       <Table>
         <TableHeader />
         <Table.Body>
-          {uniqueUsedStarItemsArray.map(mapItemsToTable)}
+          {uniqueUsedStarItemsArray.filter(filterWith(usedStarItemsFilter)).map(mapItemsToTable)}
         </Table.Body>
         <TableFooter itemsArray={uniqueUsedStarItemsArray}/>
       </Table>
