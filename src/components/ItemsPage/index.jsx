@@ -157,9 +157,11 @@ const ItemsPage = () => {
             <Table.HeaderCell colSpan='2'/>
             <Table.HeaderCell><b>{parseToRp(filteredItems?.reduce(calculatePriceTimesStock, 0))}</b></Table.HeaderCell>
           </Table.Row>
-          <Table.HeaderCell colSpan='2'><b>Total</b></Table.HeaderCell>
-          <Table.HeaderCell colSpan='2'/>
-          <Table.HeaderCell><b>{parseToRp(itemsList?.reduce(calculatePriceTimesStock, 0))}</b></Table.HeaderCell>
+          <Table.Row>
+            <Table.HeaderCell colSpan='2'><b>Total</b></Table.HeaderCell>
+            <Table.HeaderCell colSpan='2'/>
+            <Table.HeaderCell><b>{parseToRp(itemsList?.reduce(calculatePriceTimesStock, 0))}</b></Table.HeaderCell>
+          </Table.Row>
         </Table.Footer>
       </CustomTable>
     </div>
