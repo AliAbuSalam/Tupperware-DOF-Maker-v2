@@ -40,6 +40,20 @@ const itemFragment = gql`
   }
 `;
 
+const groupFragment = gql`
+  fragment groupDetails on Group {
+    id
+      member {
+        personId
+        name
+        isLeader
+        personalInfo {
+          position
+        }
+      }
+  }
+`;
+
 export const LOGIN = gql`
   mutation login($username: String! $password: String!) {
     login(
@@ -360,4 +374,45 @@ export const CREATE_DOF = gql`
   }
   ${dofFragment}
   ${itemFragment}
+`;
+
+export const GET_ALL_GROUPS = gql`
+  query getAllGroups {
+    getAllGroups {
+      ...groupDetails
+    }
+  }
+  ${groupFragment}
+`;
+
+export const CREATE_GROUP = gql`
+  mutation createGroup(
+    $leader: ID!
+    $member: [ID!]!
+  ){
+    createGroup(
+      leader: $leader
+      member: $member
+    ){
+      ...groupDetails
+    }
+  }
+  ${groupFragment}
+`;
+
+export const EDIT_GROUP = gql`
+  mutation editGroup(
+    $id: ID!,
+    $leader: ID!,
+    $member: [ID!]!
+  ){
+    editGroup(
+      id: $id
+      leader: $leader
+      member: $member
+    ){
+      ...groupDetails
+    }
+  }
+  ${groupFragment}
 `;

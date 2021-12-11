@@ -15,6 +15,7 @@ import DofView from './components/DofView';
 import DofSearch from './components/DofSearch';
 import { SET_TOKEN } from './reducers/tokenReducers';
 import SingleDof from './components/SingleDof';
+import GroupPage from './components/GroupPage';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -65,6 +66,9 @@ const App = () => {
         </Route>
         <Route path='/login' exact>
           <Login />
+        </Route>
+        <Route path='/group' exact>
+          <GroupPage />
         </Route>
         <Route path='/'>
           <Home />

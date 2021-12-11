@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Table, Button } from 'semantic-ui-react';
+import { Form, Table, Button, Dropdown } from 'semantic-ui-react';
 import { useDispatch } from 'react-redux';
 
 import forceInputToNumber from '../../lib/forceInputToNumber';

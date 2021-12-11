@@ -6,7 +6,7 @@ import parseToRp from '../../lib/parseToRp';
 import forceInputToNumber from '../../lib/forceInputToNumber';
 import { EDIT_USED_ITEM_DOF_EDIT } from '../../reducers/dofEditReducers';
 import { EDIT_USED_STAR_ITEM_DOF_EDIT } from '../../reducers/dofEditReducers';
-import DeleteIcon from './DeleteIcon';
+import DeleteIcon from '../DeleteIcon';
 import DeleteModal from './DeleteModal';
 
 const styles = {
@@ -75,7 +75,6 @@ const ItemRow = ({ item, pageType, itemType }) => {
           {parseToRp(total)}
           {pageType === 'singleDof'
             ? <DeleteIcon onClick={() => {
-              console.log('clicked');
               setToggleDeleteModal(true)
             }}/>
             : <></>

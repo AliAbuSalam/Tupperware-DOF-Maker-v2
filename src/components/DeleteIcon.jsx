@@ -8,8 +8,8 @@ const DeleteIcon = (props) => {
       name='delete' 
       onMouseEnter={() => setMouseHover(true)} 
       onMouseLeave={() => setMouseHover(false)} 
-      style={mouseHover ? { ...styles.deleteIcon, ...styles.deleteIconOnHover }: styles.deleteIcon}
       {...props}
+      style={mouseHover ? { ...styles.deleteIcon, ...styles.deleteIconOnHover, ...props.style }: { ...styles.deleteIcon, ...props.style}}
     />
   );
 };

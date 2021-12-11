@@ -55,6 +55,14 @@ const NavBar = () => {
       >
         Personnel
       </Menu.Item>
+      <Menu.Item
+        name='group'
+        as={Link}
+        to='/group/'
+        active={activePage === 'group'}
+      >
+        Group
+      </Menu.Item>
       <Menu.Menu position='right'>
         <Menu.Item
           name='logout'
