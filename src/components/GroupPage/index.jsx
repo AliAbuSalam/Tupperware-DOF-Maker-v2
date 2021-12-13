@@ -10,6 +10,7 @@ import { GET_ALL_GROUPS, GET_ALL_PERSONNEL } from '../../gql/queries';
 import Group from './Group';
 import AddGroupForm from './AddGroupForm';
 import EditGroupForm from './EditGroupForm';
+import DeleteGroupForm from './DeleteGroupForm';
 import ErrorMessage from '../ErrorMessage';
 
 const GroupPage = () => {
@@ -20,6 +21,7 @@ const GroupPage = () => {
   const [peopleNotInGroup, setPeopleNotInGroup] = useState([]);
   const [pageState, setPageState] = useState(null);
   const [groupToEdit, setGroupToEdit] = useState(null);
+  const [groupToDelete, setGroupToDelete] = useState(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -43,6 +45,7 @@ const GroupPage = () => {
   useEffect(() => {
     if(pageState === 'EDIT'){
       setGroupToEdit(null);
+      //This is used to close editor after saving an edit
     }
   }, [groupList]);
 
@@ -71,10 +74,12 @@ const GroupPage = () => {
     <div style={styles.divParent}>
       <Button color='green' onClick={() => handleChangePageState('ADD')} style={styles.button}>Add Group</Button>
       <Button color='yellow' onClick={() => handleChangePageState('EDIT')}>Edit Group</Button>
+      <Button color='red' floated='right' onClick={() => handleChangePageState('DELETE')}>Delete Group</Button>
       <ErrorMessage message={error?.message}/>
       <ErrorMessage message={errorMember?.message} />
       <AddGroupForm pageState={pageState} availableMember={peopleNotInGroup}/>
       <EditGroupForm availableMember={peopleNotInGroup} groupToEdit={groupToEdit}/>
+      <DeleteGroupForm group={groupToDelete} setGroup={setGroupToDelete}/>
       {loading ? 
         <Segment placeholder>
           <Loader active/>
@@ -84,7 +89,7 @@ const GroupPage = () => {
           <Grid columns='2'>
             {groupList?.map(group => 
               <Grid.Column key={group.id}>
-                <Group group={group} pageState={pageState} setGroup={setGroupToEdit}/>
+                <Group group={group} pageState={pageState} setGroup={setGroupToEdit} setGroupToDelete={setGroupToDelete}/>
               </Grid.Column>)
             }
           </Grid>

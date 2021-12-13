@@ -416,3 +416,15 @@ export const EDIT_GROUP = gql`
   }
   ${groupFragment}
 `;
+
+export const DELETE_GROUP = gql`
+  mutation deleteGroup(
+    $id: ID!
+  ){
+    deleteGroup(
+      id: $id
+    ){
+      groupId
+    }
+  }
+`;

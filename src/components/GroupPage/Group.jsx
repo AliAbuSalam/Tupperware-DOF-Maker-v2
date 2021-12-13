@@ -1,7 +1,9 @@
 import React from 'react';
 import { Table, Icon } from 'semantic-ui-react';
 
-const Group = ({ group, pageState, setGroup }) => {
+import DeleteIcon from '../DeleteIcon';
+
+const Group = ({ group, pageState, setGroup, setGroupToDelete }) => {
   const mapMemberToTable = (firstRow) => (member, index) => (
     <Table.Row key={member.personId}>
       <Table.Cell>{firstRow ? index + 1 : index + 2}</Table.Cell>
@@ -27,7 +29,10 @@ const Group = ({ group, pageState, setGroup }) => {
           <Table.HeaderCell>No</Table.HeaderCell>
           <Table.HeaderCell>Member</Table.HeaderCell>
           <Table.HeaderCell>Position</Table.HeaderCell>
-          <Table.HeaderCell>Leader</Table.HeaderCell>
+          <Table.HeaderCell>
+            Leader
+            {pageState === 'DELETE' && <DeleteIcon onClick={() => setGroupToDelete(group)}/>}
+          </Table.HeaderCell>
         </Table.Row>
       </Table.Header>
 
