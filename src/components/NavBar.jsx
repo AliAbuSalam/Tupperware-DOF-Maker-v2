@@ -63,6 +63,14 @@ const NavBar = () => {
       >
         Group
       </Menu.Item>
+      <Menu.Item
+        name='omset'
+        as={Link}
+        to='/omset/'
+        active={activePage === 'omset'}
+      >
+        Omset
+      </Menu.Item>
       <Menu.Menu position='right'>
         <Menu.Item
           name='logout'

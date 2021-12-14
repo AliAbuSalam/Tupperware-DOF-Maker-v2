@@ -16,6 +16,7 @@ import DofSearch from './components/DofSearch';
 import { SET_TOKEN } from './reducers/tokenReducers';
 import SingleDof from './components/SingleDof';
 import GroupPage from './components/GroupPage';
+import OmsetPage from './components/OmsetPage';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -69,6 +70,9 @@ const App = () => {
         </Route>
         <Route path='/group' exact>
           <GroupPage />
+        </Route>
+        <Route path='/omset'>
+          <OmsetPage />
         </Route>
         <Route path='/'>
           <Home />
