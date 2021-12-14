@@ -17,8 +17,7 @@ const AddModal = ({ dofs }) => {
   const personnelList = usePersonnel();
   const dofsLocation = useSelector(state => state.dofs.newlyAddedDofLocation);
   const [createDof, result] = useMutation(CREATE_DOF);
-  const eligibleOwner = personnelList.filter(personnel => !dofs?.dof?.map(dof => dof.owner.name).includes(personnel.name));
-  const ownerList = eligibleOwner.map(owner => {
+  const ownerList = personnelList.map(owner => {
     return {
       key: owner.name,
       text: owner.name,

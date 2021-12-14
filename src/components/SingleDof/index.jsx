@@ -37,7 +37,7 @@ const SingleDof = () => {
   const dof = useSelector(state => state.dofEdit);
   const editFlag = useSelector(state => state.dofEdit?.isDofEdited);
   const [getDof, { loading, data }] = useLazyQuery(GET_DOF, { variables: { id: dofId }});
-  const [saveDof, { error: errorSaveDof }] = useMutation(SAVE_DOF);
+  const [saveDof, { error: errorSaveDof, loading: loadingSaveDof }] = useMutation(SAVE_DOF);
   const [getItems, { loading: itemsLoading, data: itemsData }] = useLazyQuery(GET_ALL_ITEMS);
   const [getPersonnel, { loading: personnelLoading, data: personnelData }] = useLazyQuery(GET_ALL_PERSONNEL);
   const { fetchItems: getItemsStar, fetchPrice: getStarPrice, starItemsResult, starPriceResult } = useStarItems();
@@ -149,7 +149,7 @@ const SingleDof = () => {
       </div>
 
       <div>
-        <Button style={styles.saveButton} disabled={!editFlag} onClick={handleSave} size='big' color={editFlag ? 'green': 'grey'}>Save</Button>
+        <Button style={styles.saveButton} disabled={!editFlag} onClick={handleSave} loading={loadingSaveDof} size='big' color={editFlag ? 'green': 'grey'}>Save</Button>
         <ClipboardButtons style={styles.clipboardButtons} dof={dof}/>
         <DeleteDof dof={dof} style={styles.deleteButton} weekIndex={weekIndex}/>
       </div>
