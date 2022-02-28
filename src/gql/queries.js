@@ -4,6 +4,7 @@ const dofFragment = gql`
   fragment dofDetails on SingleDof {
     id
     owner{
+      personId
       name
       consultantId
     }
@@ -51,6 +52,23 @@ const groupFragment = gql`
           position
         }
       }
+  }
+`;
+
+const omsetFragment = gql`
+  fragment omsetDetails on OmsetPlan {
+    id
+    groupId
+    date {
+      year
+      month
+    }
+    target
+    individualTarget {
+      personId
+      name
+      target
+    }
   }
 `;
 
@@ -428,3 +446,57 @@ export const DELETE_GROUP = gql`
     }
   }
 `;
+
+export const GET_OMSET_PLANS = gql`
+  query getOmsetPlans(
+    $year: Int!
+    $month: Int!
+    $year2: Int
+    $month2: Int
+    $groupId: ID
+  ){
+    getOmsetPlans(
+      year: $year
+      month: $month
+      year2: $year2
+      month2: $month2
+      groupId: $groupId
+    ){
+      omsetPlans {
+        ...omsetDetails
+      }
+      relatedDofs {
+        ...dofDetails
+      }
+    }
+  }
+  ${omsetFragment}
+  ${dofFragment}
+`;
+
+export const EDIT_OMSET_PLAN = gql`
+  mutation editOmsetPlan(
+    $id: ID!
+    $date: DateForOmsetInput
+    $individualTarget: [TargetForOmset!]!
+  ){
+    editOmsetPlan(
+      id: $id
+      date: $date
+      individualTarget: $individualTarget
+    ){
+      ...omsetDetails
+    }
+  }
+  ${omsetFragment}
+`;
+
+export const DELETE_OMSET_PLAN = gql`
+  mutation deleteOmsetPlan(
+    $id: ID!
+  ){
+    deleteOmsetPlan(
+      id: $id
+    )
+  }
+`

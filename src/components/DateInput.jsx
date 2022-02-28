@@ -5,7 +5,7 @@ import useMonthToWeek from '../hooks/useMonthToWeek';
 import monthObject from '../lib/monthObject';
 import forceInputToNumber from '../lib/forceInputToNumber';
 
-const DateInput = ({ date, setDate, clearableWeek }) => {
+const DateInput = ({ date, setDate, clearableWeek, clearableMonth, noWeek, style, disabled }) => {
   const [weekValue, setMonthToParse] = useMonthToWeek();
 
   const handleChangeYear = ({ target }) => {
@@ -16,10 +16,13 @@ const DateInput = ({ date, setDate, clearableWeek }) => {
   };
 
   const handleChangeMonth = (_, data) => {
-    setDate({
+    const newDateObject = {
       ...date,
-      month: data.value,
-      week: ''
+      month: data.value
+    }
+    setDate({ 
+      ...newDateObject, 
+      ...(noWeek ? {}: { week: ''})
     });
   };
 
@@ -36,29 +39,37 @@ const DateInput = ({ date, setDate, clearableWeek }) => {
 
   return(
     <>
-      <Form.Group width='equal'>
+      <Form.Group width='equal' style={{ ...style }}>
         <Form.Input 
           label='Year'
           placeholder='Year'
           value={date.year}
           onChange={handleChangeYear}
+          disabled={disabled}
         />
         <Form.Dropdown 
           label='Month'
           search
           selection
+          clearable={false || clearableMonth}
           options={monthObject}
           onChange={handleChangeMonth}
+          disabled={disabled}
         />
-        <Form.Dropdown 
-          label='Week'
-          placeholder='Week'
-          search
-          clearable={false || clearableWeek}
-          selection
-          options={weekValue}
-          onChange={handleChangeWeek}
-        />
+        {
+          noWeek ?
+          <></> :
+          <Form.Dropdown 
+            label='Week'
+            placeholder='Week'
+            search
+            clearable={false || clearableWeek}
+            selection
+            options={weekValue}
+            onChange={handleChangeWeek}
+            disabled={disabled}
+          />
+        }
       </Form.Group>
     </>
   );

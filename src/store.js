@@ -8,6 +8,7 @@ import dofReducers from './reducers/dofReducers';
 import itemStarReducers from './reducers/itemStarReducers';
 import clipboardReducers from './reducers/clipboardReducers';
 import groupReducers from './reducers/groupReducers';
+import omsetReducers from './reducers/omsetReducers';
 
 const reducer = combineReducers({
   token: tokenReducer,
@@ -18,7 +19,8 @@ const reducer = combineReducers({
   dofEdit: dofEditReducers,
   itemsStar: itemStarReducers,
   clipboard: clipboardReducers,
-  groups: groupReducers
+  groups: groupReducers,
+  omsets: omsetReducers
 });
 
 const store = createStore(reducer);

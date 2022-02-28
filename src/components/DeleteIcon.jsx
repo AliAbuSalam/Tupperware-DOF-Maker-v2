@@ -1,26 +1,35 @@
 import React, { useState } from 'react';
 import { Icon } from 'semantic-ui-react';
 
-const DeleteIcon = (props) => {
+const DeleteIcon = ({ name, defaultStyle, onHoverStyle, style, ...rest }) => {
   const [mouseHover, setMouseHover] = useState(false);
   return(
     <Icon
-      name='delete' 
+      name={name || 'delete'} 
       onMouseEnter={() => setMouseHover(true)} 
       onMouseLeave={() => setMouseHover(false)} 
-      {...props}
-      style={mouseHover ? { ...styles.deleteIcon, ...styles.deleteIconOnHover, ...props.style }: { ...styles.deleteIcon, ...props.style}}
+      {...rest}
+      style={
+        mouseHover ? 
+        { 
+          ...defaultStyle || styles.default,
+          ...onHoverStyle || styles.defaultOnHover, 
+          ...style 
+        }: { 
+          ...defaultStyle || styles.default, 
+          ...style
+        }}
     />
   );
 };
 
 const styles = {
-  deleteIcon: {
+  default: {
     float: 'right',
     cursor: 'pointer',
     color: '#e21c08'
   },
-  deleteIconOnHover: {
+  defaultOnHover: {
     color: '#ff0000'
   }
 }
