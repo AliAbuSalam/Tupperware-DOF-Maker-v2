@@ -9,6 +9,7 @@ import { SET_ALL_GROUPS } from '../../reducers/groupReducers';
 import { SET_OMSET_PLANS } from '../../reducers/omsetReducers';
 import DateInput from '../DateInput';
 import ErrorMessage from '../ErrorMessage';
+import GroupsDropdown from './GroupsDropdown';
 
 const OmsetDateInput = () => {
   const groups = useSelector(state => state.groups);
@@ -26,15 +27,6 @@ const OmsetDateInput = () => {
   });
   const [disableSearchFlag, setDisableSearchFlag] = useState(false);
   const dispatch = useDispatch();
-
-  const mapGroupsForDropdown = (group) => {
-    return {
-      key: group.id,
-      text: group.member.find(member => member.isLeader).name,
-      value: group.id
-    }
-  };
-
   const handleChangeGroup = (_, data) => {
     setGroupToFetch(data.value);
   };
@@ -96,15 +88,16 @@ const OmsetDateInput = () => {
       <div style={gridStyles.mainGrid}>
         <div style={gridStyles.divForm}>
           <Form>
-            <Form.Dropdown
+            <GroupsDropdown
               label='Group'
               clearable
               search
               selection
               disabled={loadingOmset}
               loading={loading}
-              options={groups ? groups.map(mapGroupsForDropdown): []}
+              groups={groups}
               onChange={handleChangeGroup}
+              setSelectedGroupId={setGroupToFetch}
             />
           </Form>
         </div>

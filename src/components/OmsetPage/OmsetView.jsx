@@ -5,6 +5,7 @@ import { Dropdown, Segment } from 'semantic-ui-react';
 import monthValueToText from '../../lib/monthValueToText';
 import parseOmsetDateToMonth from '../../lib/omsetDateToMonth';
 import OmsetTable from './OmsetTable/OmsetTable';
+import AddOmsetModal from './AddOmsetModal';
 
 const OmsetView = () => {
   const omsetsData = useSelector(state => state.omsets);
@@ -67,6 +68,7 @@ const OmsetView = () => {
           <></>
         }
       </div>
+      <AddOmsetModal style={styles.addOmsetButton} date={activeDate}/>
       <Segment style={styles.omsetDiv}>
         {omsetsData.omsetPlans.filter(plan => 
             plan.date.year === activeDate?.year 
@@ -96,6 +98,9 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     flexWrap: 'nowrap'
+  },
+  addOmsetButton: {
+    marginLeft: '1em'
   }
 }
 

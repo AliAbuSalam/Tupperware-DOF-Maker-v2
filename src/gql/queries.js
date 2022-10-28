@@ -474,6 +474,29 @@ export const GET_OMSET_PLANS = gql`
   ${dofFragment}
 `;
 
+export const CREATE_OMSET_PLAN = gql`
+  mutation createOmsetPlan(
+    $groupId: ID!
+    $date: DateForOmsetInput!
+    $individualTarget: [TargetForOmset!]!
+  ){
+    createOmsetPlan(
+      groupId: $groupId
+      date: $date
+      individualTarget: $individualTarget
+    ){
+      omsetPlan {
+        ...omsetDetails
+      }
+      relatedDofs {
+        ...dofDetails
+      }
+    }
+  }
+  ${omsetFragment}
+  ${dofFragment}
+`;
+
 export const EDIT_OMSET_PLAN = gql`
   mutation editOmsetPlan(
     $id: ID!
