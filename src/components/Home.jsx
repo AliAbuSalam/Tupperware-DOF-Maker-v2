@@ -12,8 +12,13 @@ const Home = () => {
   
   return(
   <div>
-    <h1>Home Page</h1>
+    <h1 style={headerStyle}>Tupperware Dof Maker</h1>
   </div>);
 };
+
+const headerStyle = {
+  padding: '5px',
+  textAlign: 'center',
+}
 
 export default Home;
